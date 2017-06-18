@@ -3,6 +3,7 @@ package com.example.victoria.cognusapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -49,7 +50,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * TODO: remove after connecting to a real authentication system.
      */
     private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
+            "foo@example.com:hello", "bar@example.com:world",
+            "admin@admin.com:admin"
     };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -185,9 +187,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(email, password, this);
             mAuthTask.execute((Void) null);
         }
+    }
+
+    public void registrarNovaConta(View v) {
+        Intent intent = new Intent(this, Registrar1.class);
+        startActivity(intent);
     }
 
     private boolean isEmailValid(String email) {
@@ -197,7 +204,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() > 0;
     }
 
     /**
@@ -279,6 +286,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView.setAdapter(adapter);
     }
 
+    public void navegarPaginaPrincipal() {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -298,10 +310,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mEmail;
         private final String mPassword;
+        private final LoginActivity mActivity;
 
-        UserLoginTask(String email, String password) {
+        UserLoginTask(String email, String password, LoginActivity activity) {
             mEmail = email;
             mPassword = password;
+            mActivity = activity;
         }
 
         @Override
@@ -323,7 +337,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
 
-            // TODO: register the new account here.
             return true;
         }
 
@@ -332,8 +345,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
+            //navega para a tela principal
             if (success) {
-                finish();
+                mActivity.navegarPaginaPrincipal();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();

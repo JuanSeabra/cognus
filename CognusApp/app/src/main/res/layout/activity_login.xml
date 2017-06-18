@@ -92,8 +92,21 @@
                 android:layout_height="100px"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
+<<<<<<< HEAD
                 android:layout_weight="9.94"
                 android:text="@string/action_sign_in"
+=======
+                android:text="Entrar"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/button"
+                style="?android:textAppearanceSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:onClick="registrarNovaConta"
+                android:text="Registrar"
+>>>>>>> 07327fa25bfe8e3c831e1f80059875d53a5f665f
                 android:textStyle="bold" />
 
         </LinearLayout>
