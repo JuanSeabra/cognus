@@ -24,7 +24,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+<<<<<<< HEAD
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" />
+        <activity
+            android:name=".RegistrarActivity"
+            android:label="@string/title_activity_registrar" />
+=======
         <activity android:name=".Registrar1" android:label="@string/titulo_registro"></activity>
+>>>>>>> 07327fa25bfe8e3c831e1f80059875d53a5f665f
     </application>
 
 </manifest>
