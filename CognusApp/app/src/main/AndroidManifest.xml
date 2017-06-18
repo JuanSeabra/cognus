@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login">
@@ -24,16 +24,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".RegistrarActivity"
             android:label="@string/title_activity_registrar" />
-=======
-        <activity android:name=".Registrar1" android:label="@string/titulo_registro"></activity>
->>>>>>> 07327fa25bfe8e3c831e1f80059875d53a5f665f
+        <activity
+            android:name=".Registrar1"
+            android:label="@string/titulo_registro" />
+        <activity android:name=".HomePageActivity" />
+        <activity android:name=".DetalhePerguntaActivity" />
+        <activity android:name=".ResponderPerguntaActivity" />
+        <activity android:name=".FazerPerguntaActivity" />
+        <activity android:name=".ListaTopicosActivity" />
+        <activity android:name=".FeedTopicosActivity" />
+        <activity android:name=".PerfilUsuarioActivity" />
+        <activity android:name=".PerguntasRespostasUsuarioActivity" />
+        <activity android:name=".ResultadoBuscaActivity"></activity>
     </application>
 
 </manifest>
