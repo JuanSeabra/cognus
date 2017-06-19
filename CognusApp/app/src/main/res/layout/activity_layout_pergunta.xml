@@ -14,7 +14,7 @@
         android:text="Tags"
         android:textSize="40px"
         app:layout_constraintLeft_toLeftOf="parent"
-        tools:layout_editor_absoluteY="5dp" />
+        tools:layout_editor_absoluteY="3dp" />
 
     <TextView
         android:id="@+id/pergunta"

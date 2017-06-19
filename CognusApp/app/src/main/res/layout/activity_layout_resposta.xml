@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.victoria.cognusapp.layout_resposta">
+
+    <ImageView
+        android:id="@+id/foto"
+        android:layout_width="53dp"
+        android:layout_height="53dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="38dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone_pessoa" />
+
+    <TextView
+        android:id="@+id/nome_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:text="Usuário"
+        android:textSize="30px"
+        app:layout_constraintLeft_toLeftOf="parent"
+        tools:layout_editor_absoluteY="98dp" />
+
+    <TextView
+        android:id="@+id/resposta"
+        android:layout_width="278dp"
+        android:layout_height="101dp"
+        android:layout_marginRight="27dp"
+        android:layout_marginTop="68dp"
+        android:background="@drawable/drawable_contorno"
+        android:text="Resposta"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/curtir"
+        android:layout_width="33dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/curtir"
+        tools:layout_editor_absoluteY="176dp"
+        android:layout_marginLeft="17dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/descurtir"
+        android:layout_width="33dp"
+        android:layout_height="30dp"
+        app:srcCompat="@drawable/descurtir"
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="176dp" />
+
+    <ImageView
+        android:id="@+id/follow"
+        android:layout_width="47dp"
+        android:layout_height="53dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="25dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/follow" />
+</android.support.constraint.ConstraintLayout>
