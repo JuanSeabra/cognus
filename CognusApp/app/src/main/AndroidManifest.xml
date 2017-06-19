@@ -44,7 +44,8 @@
         <activity android:name=".PerfilUsuarioActivity" />
         <activity android:name=".PerguntasRespostasUsuarioActivity" />
         <activity android:name=".ResultadoBuscaActivity" />
-        <activity android:name=".layout_cadastro_topicos"></activity>
+        <activity android:name=".layout_cadastro_topicos" />
+        <activity android:name=".layout_pergunta"></activity>
     </application>
 
 </manifest>
