@@ -1,14 +1,15 @@
 <resources>
     <string name="app_name">CognusApp</string>
     <string name="title_activity_login">Login</string>
-    <string name="title_activity_registrar">Registrar</string>
+    <string name="title_activity_responder">Responder Pergunta</string>
+    <string name="title_activity_perguntar">Nova Pergunta</string>
     <string name="titulos">Cognus</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha</string>
     <string name="action_forget_password">Esqueceu a senha?</string>
-    <string name="action_sign_in">Entrar ou registrar</string>
+    <string name="action_sign_in">Entrar</string>
     <string name="action_sign_in_short">Entrar</string>
     <string name="error_invalid_email">Forneça um endereço de email válido</string>
     <string name="error_invalid_password">Senha muito curta</string>

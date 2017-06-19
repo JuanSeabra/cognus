@@ -15,8 +15,8 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="146dp"
-        app:srcCompat="@mipmap/g5256" />
+        android:layout_height="99dp"
+        app:srcCompat="@drawable/logo" />
 
     <ProgressBar
         android:id="@+id/login_progress"
@@ -75,33 +75,39 @@
                 android:id="@+id/forget_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:textColor="@color/colorPrimary"
-                android:gravity="center"
-                android:onClick="onClick"
                 android:clickable="true"
+                android:ems="10"
+                android:textSize="32px"
+                android:gravity="center"
                 android:inputType="textPersonName"
-                android:text="@string/action_forget_password" />
+                android:onClick="onClick"
+                android:text="@string/action_forget_password"
+                android:textColor="@color/colorPrimary" />
 
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="?android:textAppearanceSmall"
-                android:background="@color/colorPrimary"
-                android:textColor="@android:color/white"
                 android:layout_width="200px"
                 android:layout_height="100px"
                 android:layout_gravity="center"
                 android:layout_marginTop="16dp"
                 android:layout_weight="9.94"
-                android:text="@string/action_sign_in" />
+                android:background="@color/colorPrimary"
+                android:text="@string/action_sign_in"
+                android:textStyle="bold"
+                android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/button"
                 style="?android:textAppearanceSmall"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="200px"
+                android:layout_height="100px"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:background="@color/colorPrimary"
                 android:onClick="registrarNovaConta"
                 android:text="Registrar"
+                android:textColor="@android:color/white"
                 android:textStyle="bold" />
 
         </LinearLayout>

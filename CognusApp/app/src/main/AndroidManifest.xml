@@ -26,14 +26,20 @@
         </activity>
         <activity
             android:name=".RegistrarActivity"
-            android:label="@string/title_activity_registrar" />
+            android:label="@string/titulo_registro" />
         <activity
             android:name=".Registrar1"
             android:label="@string/titulo_registro" />
-        <activity android:name=".HomePageActivity" />
+        <activity
+            android:name=".HomePageActivity"
+            android:label="@string/titulos"/>
         <activity android:name=".DetalhePerguntaActivity" />
-        <activity android:name=".ResponderPerguntaActivity" />
-        <activity android:name=".FazerPerguntaActivity" />
+        <activity
+            android:name=".ResponderPerguntaActivity"
+            android:label="@string/title_activity_responder" />
+        <activity
+            android:name=".FazerPerguntaActivity"
+            android:label="@string/title_activity_perguntar" />
         <activity android:name=".ListaTopicosActivity" />
         <activity android:name=".FeedTopicosActivity" />
         <activity android:name=".PerfilUsuarioActivity" />

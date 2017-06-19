@@ -6,4 +6,67 @@
     android:layout_height="match_parent"
     tools:context="com.example.victoria.cognusapp.DetalhePerguntaActivity">
 
+    <TextView
+        android:background="@drawable/drawable_contorno"
+        android:id="@+id/pergunta"
+        android:layout_width="329dp"
+        android:layout_height="112dp"
+        android:text="Lorem ipsolum"
+        android:layout_marginLeft="9dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.553"
+        tools:layout_editor_absoluteY="37dp"
+        tools:layout_editor_absoluteX="26dp" />
+
+    <TextView
+        android:id="@+id/tags"
+        android:layout_width="314dp"
+        android:layout_height="27dp"
+        android:text="#math #science"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.407" />
+
+    <TextView
+        android:id="@+id/numero_respostas"
+        android:layout_width="331dp"
+        android:layout_height="32dp"
+        android:text="10 respostas"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="206dp"
+        app:layout_constraintHorizontal_bias="0.513" />
+
+    <Button
+        android:id="@+id/responder"
+        android:layout_width="90dp"
+        android:layout_height="37dp"
+        android:background="@color/colorPrimary"
+        android:text="Responder"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="145dp"
+        tools:layout_editor_absoluteY="160dp" />
+
+    <ListView
+        android:id="@+id/respostas"
+        android:layout_width="335dp"
+        android:layout_height="282dp"
+        android:layout_marginBottom="4dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/drawable_contorno"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_editor_absoluteY="225dp"
+        tools:layout_editor_absoluteX="27dp" />
 </android.support.constraint.ConstraintLayout>
