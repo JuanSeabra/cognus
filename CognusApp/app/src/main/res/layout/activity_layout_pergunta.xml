@@ -64,7 +64,7 @@
         tools:layout_editor_absoluteY="192dp" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/descurtir"
         android:layout_width="33dp"
         android:layout_height="30dp"
         app:srcCompat="@drawable/descurtir"
