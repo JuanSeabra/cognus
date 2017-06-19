@@ -9,8 +9,8 @@
 
     <application
         android:allowBackup="true"
-        android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -19,6 +19,7 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -30,7 +31,7 @@
             android:label="@string/titulo_registro" />
         <activity
             android:name=".HomePageActivity"
-            android:label="@string/titulos"/>
+            android:label="@string/titulos" />
         <activity android:name=".DetalhePerguntaActivity" />
         <activity
             android:name=".ResponderPerguntaActivity"
@@ -42,7 +43,8 @@
         <activity android:name=".FeedTopicosActivity" />
         <activity android:name=".PerfilUsuarioActivity" />
         <activity android:name=".PerguntasRespostasUsuarioActivity" />
-        <activity android:name=".ResultadoBuscaActivity"></activity>
+        <activity android:name=".ResultadoBuscaActivity" />
+        <activity android:name=".layout_cadastro_topicos"></activity>
     </application>
 
 </manifest>
