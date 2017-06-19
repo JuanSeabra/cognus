@@ -1,10 +1,12 @@
 package classes;
 
+import java.io.Serializable;
+
 /**
  * Created by victoria on 19/06/17.
  */
 
-public class Usuario {
+public class Usuario implements Serializable {
     private int id;
     private String nome;
     private String email;
@@ -16,6 +18,21 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
         this.num_seguidores = num_seguidores;
+        this.id = 0;
+    }
+
+    public Usuario(String nome, String email, String senha) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.num_seguidores = 0;
+        this.id = 0;
+    }
+
+    public Usuario(String email, String senha) {
+        this.email = email;
+        this.senha = senha;
+        this.num_seguidores = 0;
         this.id = 0;
     }
 

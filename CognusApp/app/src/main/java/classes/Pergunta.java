@@ -17,6 +17,12 @@ public class Pergunta {
         this.usuario = usuario;
     }
 
+    public Pergunta(String texto, String descricao) {
+        this.id = 0;
+        this.texto = texto;
+        this.descricao = descricao;
+    }
+
     public int getId() {
         return id;
     }

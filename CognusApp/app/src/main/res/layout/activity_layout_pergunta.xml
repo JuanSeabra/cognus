@@ -12,9 +12,13 @@
         android:layout_height="232dp"
         android:layout_marginLeft="10dp"
         android:text="Tags"
-        android:textSize="40px"
+        android:textSize="30px"
         app:layout_constraintLeft_toLeftOf="parent"
         tools:layout_editor_absoluteY="3dp" />
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/pergunta"
