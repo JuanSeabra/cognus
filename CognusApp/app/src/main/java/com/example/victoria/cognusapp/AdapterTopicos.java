@@ -28,7 +28,7 @@ public class AdapterTopicos extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public String getItem(int position) {
         return topicos.get(position);
     }
 

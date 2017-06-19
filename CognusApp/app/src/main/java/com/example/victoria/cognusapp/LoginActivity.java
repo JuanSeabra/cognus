@@ -30,8 +30,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import classes.Usuario;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -49,10 +52,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
+    //lista de usuarios
+
     private static final String[] DUMMY_CREDENTIALS = new String[]{
             "foo@example.com:hello", "bar@example.com:world",
             "admin@admin.com:admin"
     };
+
+    private List<Usuario> usuarios;
+    private Usuario userAtual;
+
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
@@ -68,6 +77,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        usuarios = new ArrayList<Usuario>();
+        Usuario user = new Usuario("Administrador","admin@teste.com","admin");
+        Usuario user2 = new Usuario("João","joao@teste.com","123");
+        Usuario user3 = new Usuario("Maria","maria@teste.com","123");
+        usuarios.add(user);
+        usuarios.add(user2);
+        usuarios.add(user3);
+
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
@@ -288,9 +305,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     public void navegarPaginaPrincipal() {
         Intent intent = new Intent(this, HomePageActivity.class);
+        intent.putExtra("usuario", userAtual);
         startActivity(intent);
     }
-
 
     private interface ProfileQuery {
         String[] PROJECTION = {
@@ -329,11 +346,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+            for (Usuario usuario : usuarios) {
+                if (usuario.getEmail().equals(mEmail)) {
                     // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
+                    userAtual = usuario;
+                    return usuario.getSenha().equals(mPassword);
                 }
             }
 

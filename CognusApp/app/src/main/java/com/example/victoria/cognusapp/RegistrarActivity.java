@@ -10,8 +10,11 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
+import classes.Usuario;
+
 public class RegistrarActivity extends AppCompatActivity {
     ArrayList<String> topicos;
+    Usuario usuarioAtual;
 
     protected void criarTopicos() {
         topicos = new ArrayList<String>();
@@ -26,6 +29,9 @@ public class RegistrarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar);
 
+        Intent intent = getIntent();
+        usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+
         ListView listTopicos = (ListView) findViewById(R.id.listTopicos);
         criarTopicos();
         AdapterTopicos adapterTopicos = new AdapterTopicos(topicos, this);
@@ -37,9 +43,11 @@ public class RegistrarActivity extends AppCompatActivity {
         if (txtNome.getText().length() > 0) {
             //inserir o novo usuário no banco de dados
             //pegar os topicos escolhidos
+            usuarioAtual.setNome(txtNome.getText().toString());
 
             //proxima pagina
             Intent intent = new Intent(this, HomePageActivity.class);
+            intent.putExtra("usuario", usuarioAtual);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }

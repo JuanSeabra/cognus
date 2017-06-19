@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 
+import classes.Usuario;
+
 public class Registrar1 extends AppCompatActivity {
     // UI references.
     private EditText txtEmail;
@@ -19,6 +21,17 @@ public class Registrar1 extends AppCompatActivity {
         setContentView(R.layout.activity_registrar1);
 
     }
+
+    private boolean isEmailValid(String email) {
+        //TODO: Replace this with your own logic
+        return email.contains("@");
+    }
+
+    private boolean isPasswordValid(String password) {
+        //TODO: Replace this with your own logic
+        return password.length() > 0;
+    }
+
 
     public void proximoPasso(View view) {
         txtEmail = (EditText) findViewById(R.id.txtEmail);
@@ -37,6 +50,14 @@ public class Registrar1 extends AppCompatActivity {
         String confSenha = txtConfirmarSenha.getText().toString();
 
         //verificar se nao tem nenhum campo em branco
+        if (!isEmailValid(email)) {
+            txtEmail.setError(getString(R.string.error_invalid_email));
+            txtEmail.requestFocus();
+        }
+        if (!isPasswordValid(senha)) {
+            txtSenha.setError(getString(R.string.error_invalid_password));
+            txtSenha.requestFocus();
+        }
         if (!email.equals(confEmail)) {
             txtEmail.setError("E-mails não compatíveis!");
             txtConfirmarEmail.setError("E-mails não compatíveis!");
@@ -48,10 +69,11 @@ public class Registrar1 extends AppCompatActivity {
             txtSenha.requestFocus();
         }
         else {
+            Usuario usuario = new Usuario(email, senha);
             //pode navegar para a proxima tela
             Intent intent = new Intent(this, RegistrarActivity.class);
-            /*intent.putExtra("email", email);
-            intent.putExtra("senha", senha);*/
+            intent.putExtra("usuario", usuario);
+            //intent.putExtra("senha", senha);
             startActivity(intent);
         }
     }
