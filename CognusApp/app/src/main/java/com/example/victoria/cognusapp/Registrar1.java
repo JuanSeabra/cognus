@@ -49,7 +49,7 @@ public class Registrar1 extends AppCompatActivity {
         }
         else {
             //pode navegar para a proxima tela
-            Intent intent = new Intent(this, HomePageActivity.class);
+            Intent intent = new Intent(this, RegistrarActivity.class);
             /*intent.putExtra("email", email);
             intent.putExtra("senha", senha);*/
             startActivity(intent);
