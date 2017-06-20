@@ -10,20 +10,23 @@ public class Resposta {
     private int negativacoes;
     private int id;
     private int usuario;
+    private int pergunta;
 
-    public Resposta(String texto, int positivacoes, int negativacoes, int id, int usuario) {
+    public Resposta(String texto, int positivacoes, int negativacoes, int id, int usuario, int pergunta) {
         this.texto = texto;
         this.positivacoes = positivacoes;
         this.negativacoes = negativacoes;
         this.id = id;
         this.usuario = usuario;
+        this.pergunta = pergunta;
     }
 
-    public Resposta(String texto, int positivacoes, int negativacoes, int usuario) {
+    public Resposta(String texto, int positivacoes, int negativacoes, int usuario, int pergunta) {
         this.texto = texto;
         this.positivacoes = positivacoes;
         this.negativacoes = negativacoes;
         this.usuario = usuario;
+        this.pergunta = pergunta;
     }
 
     public String getTexto() {
