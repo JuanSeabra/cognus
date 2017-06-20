@@ -7,15 +7,26 @@ package classes;
 public class Topico {
     private int id;
     private String descricao;
+    private String titulo;
     private int num_seguidores;
 
-    public Topico(String descricao) {
+    public Topico(String descricao, String titulo) {
         this.descricao = descricao;
+        this.titulo = titulo;
     }
 
-    public Topico(String descricao, int num_seguidores) {
+    public Topico(String descricao, String titulo, int num_seguidores) {
         this.descricao = descricao;
+        this.titulo = titulo;
         this.num_seguidores = num_seguidores;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public int getId() {
