@@ -23,6 +23,12 @@ public class Pergunta {
         this.descricao = descricao;
     }
 
+    public Pergunta(String texto, String descricao, int id, int usuario) {
+        this.id = id;
+        this.texto = texto;
+        this.descricao = descricao;
+    }
+
     public int getId() {
         return id;
     }

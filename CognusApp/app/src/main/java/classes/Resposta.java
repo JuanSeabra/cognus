@@ -10,6 +10,23 @@ public class Resposta {
     private int negativacoes;
     private int id;
     private int usuario;
+
+    public int getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(int usuario) {
+        this.usuario = usuario;
+    }
+
+    public int getPergunta() {
+        return pergunta;
+    }
+
+    public void setPergunta(int pergunta) {
+        this.pergunta = pergunta;
+    }
+
     private int pergunta;
 
     public Resposta(String texto, int positivacoes, int negativacoes, int id, int usuario, int pergunta) {

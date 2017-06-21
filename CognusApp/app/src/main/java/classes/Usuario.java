@@ -36,6 +36,13 @@ public class Usuario implements Serializable {
         this.id = 0;
     }
 
+    public Usuario(String email, String senha, int id) {
+        this.email = email;
+        this.senha = senha;
+        this.num_seguidores = 0;
+        this.id = id;
+    }
+
     public int getId() {
         return id;
     }
