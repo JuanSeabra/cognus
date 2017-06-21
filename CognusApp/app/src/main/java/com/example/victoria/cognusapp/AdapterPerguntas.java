@@ -51,15 +51,16 @@ public class AdapterPerguntas extends BaseAdapter {
         Pergunta pergunta = perguntas.get(respostas.get(position).getPergunta()-1);
 
         TextView lblTags = (TextView) view.findViewById(R.id.tags);
-        TextView lblPergunta = (TextView) view.findViewById(R.id.pergunta);
-        TextView lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario);
+        TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
+        TextView lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
         TextView lblResposta = (TextView) view.findViewById(R.id.resposta);
         TextView lblNumResp = (TextView) view.findViewById(R.id.numero_respostas);
 
         String tags = "Tag1 Tag2 Tag3";
         lblTags.setText(tags);
         lblPergunta.setText(pergunta.getTexto());
-        lblNomeUsuario.setText(usuarios.get(respostas.get(position).getUsuario()-1).getNome());
+        System.out.println(usuarios.get(respostas.get(position).getUsuario()-1).getNome());
+        lblNomeUsuario.setText("teste");
         lblResposta.setText(respostas.get(position).getTexto());
 
         Integer cont = new Integer(0);

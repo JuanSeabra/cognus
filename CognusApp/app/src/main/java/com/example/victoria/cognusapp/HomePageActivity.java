@@ -1,9 +1,11 @@
 package com.example.victoria.cognusapp;
 
+import android.app.LauncherActivity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -63,6 +65,16 @@ public class HomePageActivity extends AppCompatActivity {
         AdapterPerguntas adapterPerguntas = new AdapterPerguntas(perguntas, respostas, usuarios, this);
 
         lstPerguntas.setAdapter(adapterPerguntas);
+
+        lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pergunta pergSelecionada = perguntas.get(position);
+                Intent intent1 = new Intent(HomePageActivity.this, DetalhePerguntaActivity.class);
+                intent1.putExtra("pergunta",pergSelecionada);
+                startActivity(intent1);
+            }
+        });
     }
 
     public void fazerPergunta(View view) {

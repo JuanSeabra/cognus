@@ -24,7 +24,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/pergunta"
+        android:id="@+id/txtPerguntaDesc"
         android:layout_width="364dp"
         android:layout_height="34dp"
         android:layout_marginLeft="10dp"
@@ -48,10 +48,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/resposta"
         android:layout_marginTop="41dp"
         android:layout_marginBottom="41dp"
-        app:layout_constraintTop_toTopOf="@+id/pergunta" />
+        app:layout_constraintTop_toTopOf="@+id/txtPerguntaDesc" />
 
     <TextView
-        android:id="@+id/nome_usuario"
+        android:id="@+id/nome_usuario_resp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Usuário"
@@ -90,7 +90,7 @@
         android:layout_marginEnd="10dp"
         app:layout_constraintRight_toRightOf="@+id/foto"
         tools:layout_constraintLeft_creator="1"
-        app:layout_constraintLeft_toLeftOf="@+id/nome_usuario"
+        app:layout_constraintLeft_toLeftOf="@+id/nome_usuario_resp"
         app:layout_constraintTop_toTopOf="@+id/descurtir" />
 
     <ImageView
@@ -105,10 +105,10 @@
         android:layout_marginStart="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/tags"
         android:layout_marginEnd="22dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="21dp"
         app:layout_constraintTop_toBottomOf="@+id/resposta"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="13dp"
+        android:layout_marginBottom="14dp"
         app:layout_constraintLeft_toRightOf="@+id/curtir" />
 
     <TextView

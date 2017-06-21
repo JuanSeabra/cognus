@@ -1,10 +1,12 @@
 package classes;
 
+import java.io.Serializable;
+
 /**
  * Created by victoria on 19/06/17.
  */
 
-public class Pergunta {
+public class Pergunta implements Serializable{
     private int id;
     private String texto;
     private String descricao;
