@@ -12,9 +12,11 @@ public class Usuario implements Serializable {
     private int id;
     @SerializedName("nome")
     private String nome;
-
+    @SerializedName("email")
     private String email;
+    @SerializedName("senha")
     private String senha;
+    @SerializedName("num_seguidores")
     private int num_seguidores;
 
     public Usuario(String nome, String email, String senha, int num_seguidores) {
