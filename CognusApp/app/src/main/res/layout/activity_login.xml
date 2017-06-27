@@ -77,12 +77,12 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:ems="10"
-                android:textSize="32px"
                 android:gravity="center"
                 android:inputType="textPersonName"
                 android:onClick="onClick"
                 android:text="@string/action_forget_password"
-                android:textColor="@color/colorPrimary" />
+                android:textColor="@color/colorPrimary"
+                android:textSize="32px" />
 
             <Button
                 android:id="@+id/email_sign_in_button"
@@ -94,8 +94,8 @@
                 android:layout_weight="0.06"
                 android:background="@color/colorPrimary"
                 android:text="@string/action_sign_in"
-                android:textStyle="bold"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                android:textStyle="bold" />
 
             <Button
                 android:id="@+id/button"
@@ -115,9 +115,17 @@
                 android:id="@+id/facebook_sign_in_button"
                 android:layout_width="206dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="10dp"
-                android:layout_gravity="center_horizontal" />
+                android:layout_marginTop="15dp" />
+
+            <com.google.android.gms.common.SignInButton
+                android:id="@+id/google_sign_in_button"
+                android:layout_width="206dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="15dp" />
 
         </LinearLayout>
     </ScrollView>
