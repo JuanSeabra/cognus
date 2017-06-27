@@ -58,15 +58,6 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-        <activity
-            android:name=".menu_lateral"
-            android:label="@string/title_activity_menu_lateral"
-            android:parentActivityName=".HomePageActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.victoria.cognusapp.HomePageActivity" />
-        </activity>
     </application>
 
 </manifest>

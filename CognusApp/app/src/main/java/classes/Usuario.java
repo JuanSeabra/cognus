@@ -1,14 +1,18 @@
 package classes;
 
 import java.io.Serializable;
+import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by victoria on 19/06/17.
  */
 
 public class Usuario implements Serializable {
+    @SerializedName("id")
     private int id;
+    @SerializedName("nome")
     private String nome;
+
     private String email;
     private String senha;
     private int num_seguidores;

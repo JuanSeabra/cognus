@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "494059076581",
+    "project_id": "cognusapp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494059076581:android:daceeefc889069aa",
+        "android_client_info": {
+          "package_name": "com.example.victoria.cognus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494059076581-pe0ikjr0gcneeegh7167sqcior90t5mm.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "494059076581-s1itvkmh0h6ethhg70g79bjua2as7omg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.victoria.cognus",
+            "certificate_hash": "f78ec58014acae4cb044f68f50471205128caebe"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF1iWHSWgN1NuL6DKssj360xMxyiEeDcw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
