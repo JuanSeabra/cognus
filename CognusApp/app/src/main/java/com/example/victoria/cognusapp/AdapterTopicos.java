@@ -4,18 +4,22 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by victoria on 19/06/17.
  */
 
-public class AdapterTopicos extends BaseAdapter {
+public class AdapterTopicos extends BaseAdapter implements Filterable {
 
-    private final List<String> topicos;
+    private List<String> topicos;
     private final Activity act;
+    public List<String> orig;
 
     public AdapterTopicos(List<String> topicos, Activity act) {
         this.topicos = topicos;
@@ -47,5 +51,37 @@ public class AdapterTopicos extends BaseAdapter {
 
         lblTopico.setText(topico);
         return view;
+    }
+
+    public Filter getFilter() {
+        return new Filter() {
+
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                final FilterResults oReturn = new FilterResults();
+                final ArrayList<String> results = new ArrayList<String>();
+                if (orig == null)
+                    orig = topicos;
+                if (constraint != null) {
+                    if (orig != null && orig.size() > 0) {
+                        for (final String g : orig) {
+                            if (g.toLowerCase()
+                                    .contains(constraint.toString()))
+                                results.add(g);
+                        }
+                    }
+                    oReturn.values = results;
+                }
+                return oReturn;
+            }
+
+            @SuppressWarnings("unchecked")
+            @Override
+            protected void publishResults(CharSequence constraint,
+                                          FilterResults results) {
+                topicos = (ArrayList<String>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 }
