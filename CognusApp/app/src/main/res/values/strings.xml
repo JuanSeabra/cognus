@@ -22,4 +22,10 @@
     <string name="titulo_registro">Novo usuário</string>
     <string name="prompt_confirmar_email">Confirme seu email</string>
     <string name="prompt_confirmar_senha">Confirme sua senha</string>
+
+    <!-- Permissao Facebook -->
+    <string name="facebook_app_id">308888066236849</string>
+    <string name="fb_login_protocol_scheme">fb308888066236849</string>
+
+
 </resources>

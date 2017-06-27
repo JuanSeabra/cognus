@@ -3,6 +3,7 @@ package com.example.victoria.cognusapp;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,10 +31,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import classes.Usuario;
 
@@ -72,11 +85,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private CallbackManager mFacebookCallbackManager;
+    private LoginButton mFacebookSignInButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        mFacebookCallbackManager = CallbackManager.Factory.create();
+
         setContentView(R.layout.activity_login);
+
         usuarios = new ArrayList<Usuario>();
         Usuario user = new Usuario("Administrador","admin@teste.com","admin");
         Usuario user2 = new Usuario("João","joao@teste.com","123");
@@ -111,6 +130,34 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
+        mFacebookSignInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
+
+        mFacebookSignInButton.registerCallback(mFacebookCallbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(final LoginResult loginResult) {
+                        //TODO: Use the Profile class to get information about the current user.
+                        handleSignInResult(new Callable<Void>() {
+                            @Override
+                            public Void call() throws Exception {
+                                LoginManager.getInstance().logOut();
+                                return null;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        handleSignInResult(null);
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Log.d(LoginActivity.class.getCanonicalName(), error.getMessage());
+                        handleSignInResult(null);
+                    }
+                }
+        );
     }
 
     private void populateAutoComplete() {
@@ -119,6 +166,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         getLoaderManager().initLoader(0, null, this);
+    }
+
+    private void handleSignInResult(Callable<Void> logout) {
+        if(logout == null) {
+            /* Login error */
+            Toast.makeText(getApplicationContext(), "Erro de login", Toast.LENGTH_SHORT).show();
+        } else {
+            /* Login success */
+            //Application.getInstance().setLogoutCallable(logout);
+            startActivity(new Intent(this, HomePageActivity.class));
+        }
     }
 
     private boolean mayRequestContacts() {
@@ -376,6 +434,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
 
