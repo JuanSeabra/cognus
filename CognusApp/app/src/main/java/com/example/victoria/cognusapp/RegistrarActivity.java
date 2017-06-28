@@ -3,7 +3,7 @@ package com.example.victoria.cognusapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -11,12 +11,13 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import classes.APIClientUsuario;
-import classes.APIInterface;
+import classes.UsuarioService;
 import classes.Usuario;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrarActivity extends AppCompatActivity implements android.widget.SearchView.OnQueryTextListener {
     ArrayList<String> topicos;
@@ -24,8 +25,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
     AdapterTopicos adapterTopicos;
     android.widget.SearchView mSearchView;
     ListView listTopicos;
-
-    APIInterface apiInterface;
+    UsuarioService usuarioService;
 
     protected void criarTopicos() {
         topicos = new ArrayList<String>();
@@ -43,7 +43,31 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         Intent intent = getIntent();
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
 
-        apiInterface = APIClientUsuario.getClient().create(APIInterface.class);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.132:8080/COGNUSWS/ws/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        usuarioService = retrofit.create(UsuarioService.class);
+        usuarioAtual.setUser_name("Juan");
+
+        //testando
+        /*Call<Usuario> chamada1 = usuarioService.cadastrarUsuario(usuarioAtual);
+        chamada1.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Usuario user = response.body();
+                Log.i("Retorna",user.getUser_name() + " " + user.getUser_id());
+               // Toast.makeText(getApplicationContext(), user.getUser_name() + " " + user.getUser_id(),
+                //          Toast.LENGTH_SHORT).show();
+                System.out.println("Resposta: " + user.getUser_email());
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.i("Erro", t.getMessage());
+            }
+        });*/
 
         listTopicos = (ListView) findViewById(R.id.listTopicos);
         criarTopicos();
@@ -65,7 +89,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         if (txtNome.getText().length() > 0) {
             //inserir o novo usuário no banco de dados
             //pegar os topicos escolhidos
-            usuarioAtual.setNome(txtNome.getText().toString());
+            usuarioAtual.setUser_name(txtNome.getText().toString());
 
             registrarUsuario(usuarioAtual);
 
@@ -78,18 +102,23 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
     }
 
     private void registrarUsuario(Usuario usuarioAtual) {
-        Call chamada1 = apiInterface.createUser(usuarioAtual);
-        chamada1.enqueue(new Callback() {
+        System.out.println("Requisicao");
+        //System.out.println(usuarioAtual.getUser_name() + " " + usuarioAtual.getUser_email());
+        Call<Usuario> chamada1 = usuarioService.cadastrarUsuario(usuarioAtual);
+        chamada1.enqueue(new Callback<Usuario>() {
             @Override
-            public void onResponse(Call call, Response response) {
-                Usuario user = (Usuario) response.body();
-                Toast.makeText(getApplicationContext(), user.getNome() + " " + user.getId(),
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Usuario user = response.body();
+                Toast.makeText(getApplicationContext(), user.getUser_name() + " " + user.getUser_id(),
                         Toast.LENGTH_SHORT).show();
+                System.out.println("Resposta: " + user.getUser_email());
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
-                call.cancel();
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.i("Erro", t.getMessage());
+                Toast.makeText(getApplicationContext(), "Falha na conexão",
+                        Toast.LENGTH_SHORT).show();
             }
         });
     }

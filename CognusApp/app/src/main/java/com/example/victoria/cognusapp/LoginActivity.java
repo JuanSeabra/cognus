@@ -467,10 +467,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             }
 
             for (Usuario usuario : usuarios) {
-                if (usuario.getEmail().equals(mEmail)) {
+                if (usuario.getUser_email().equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     userAtual = usuario;
-                    return usuario.getSenha().equals(mPassword);
+                    return usuario.getUser_senha().equals(mPassword);
                 }
             }
 

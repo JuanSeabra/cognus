@@ -8,84 +8,82 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Usuario implements Serializable {
-    @SerializedName("id")
-    private int id;
-    @SerializedName("nome")
-    private String nome;
-    @SerializedName("email")
-    private String email;
-    @SerializedName("senha")
-    private String senha;
-    @SerializedName("num_seguidores")
-    private int num_seguidores;
+    @SerializedName("user_id")
+    private int user_id;
+    @SerializedName("user_name")
+    private String user_name;
+    @SerializedName("user_email")
+    private String user_email;
+    @SerializedName("user_senha")
+    private String user_senha;
+    @SerializedName("user_numseguidores")
+    private int user_numseguidores;
 
-    public Usuario(String nome, String email, String senha, int num_seguidores) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.num_seguidores = num_seguidores;
-        this.id = 0;
+    public Usuario(String user_name, String user_email, String user_senha, int user_id) {
+
+        this.user_name = user_name;
+        this.user_email = user_email;
+        this.user_senha = user_senha;
+        this.user_id = user_id;
     }
 
-    public Usuario(String nome, String email, String senha) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.num_seguidores = 0;
-        this.id = 0;
+    public Usuario(String user_email, String user_senha) {
+        this.user_email = user_email;
+        this.user_senha = user_senha;
     }
 
-    public Usuario(String email, String senha) {
-        this.email = email;
-        this.senha = senha;
-        this.num_seguidores = 0;
-        this.id = 0;
+    public Usuario(String user_name, String user_email, String user_senha) {
+        this.user_name = user_name;
+        this.user_email = user_email;
+        this.user_senha = user_senha;
+        this.user_numseguidores = 0;
     }
 
-    public Usuario(String email, String senha, int id) {
-        this.email = email;
-        this.senha = senha;
-        this.num_seguidores = 0;
-        this.id = id;
+    public Usuario(int user_id, String user_name, String user_email, String user_senha, int user_numseguidores) {
+        this.user_id = user_id;
+        this.user_name = user_name;
+        this.user_email = user_email;
+        this.user_senha = user_senha;
+        this.user_numseguidores = user_numseguidores;
     }
 
-    public int getId() {
-        return id;
+    public int getUser_id() {
+        return user_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getUser_name() {
+        return user_name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setUser_name(String user_name) {
+        this.user_name = user_name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUser_email() {
+        return user_email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 
-    public String getSenha() {
-        return senha;
+    public String getUser_senha() {
+        return user_senha;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setUser_senha(String user_senha) {
+        this.user_senha = user_senha;
     }
 
-    public int getNum_seguidores() {
-        return num_seguidores;
+    public int getUser_numseguidores() {
+        return user_numseguidores;
     }
 
-    public void setNum_seguidores(int num_seguidores) {
-        this.num_seguidores = num_seguidores;
+    public void setUser_numseguidores(int user_numseguidores) {
+        this.user_numseguidores = user_numseguidores;
     }
 }
