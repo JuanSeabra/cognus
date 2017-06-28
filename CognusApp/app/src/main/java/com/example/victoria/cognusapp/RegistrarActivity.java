@@ -7,10 +7,16 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import classes.APIClientUsuario;
+import classes.APIInterface;
 import classes.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistrarActivity extends AppCompatActivity implements android.widget.SearchView.OnQueryTextListener {
     ArrayList<String> topicos;
@@ -18,6 +24,8 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
     AdapterTopicos adapterTopicos;
     android.widget.SearchView mSearchView;
     ListView listTopicos;
+
+    APIInterface apiInterface;
 
     protected void criarTopicos() {
         topicos = new ArrayList<String>();
@@ -34,6 +42,8 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
 
         Intent intent = getIntent();
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+
+        apiInterface = APIClientUsuario.getClient().create(APIInterface.class);
 
         listTopicos = (ListView) findViewById(R.id.listTopicos);
         criarTopicos();
@@ -57,12 +67,31 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
             //pegar os topicos escolhidos
             usuarioAtual.setNome(txtNome.getText().toString());
 
+            registrarUsuario(usuarioAtual);
+
             //proxima pagina
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("usuario", usuarioAtual);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+    }
+
+    private void registrarUsuario(Usuario usuarioAtual) {
+        Call chamada1 = apiInterface.createUser(usuarioAtual);
+        chamada1.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                Usuario user = (Usuario) response.body();
+                Toast.makeText(getApplicationContext(), user.getNome() + " " + user.getId(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+                call.cancel();
+            }
+        });
     }
 
     @Override

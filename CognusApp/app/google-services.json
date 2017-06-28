@@ -13,16 +13,16 @@
       },
       "oauth_client": [
         {
-          "client_id": "494059076581-pe0ikjr0gcneeegh7167sqcior90t5mm.apps.googleusercontent.com",
-          "client_type": 3
-        },
-        {
-          "client_id": "494059076581-s1itvkmh0h6ethhg70g79bjua2as7omg.apps.googleusercontent.com",
+          "client_id": "494059076581-sicqu0oibco9v5tggv1vuqsnp9kuq805.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.victoria.cognus",
             "certificate_hash": "f78ec58014acae4cb044f68f50471205128caebe"
           }
+        },
+        {
+          "client_id": "494059076581-pe0ikjr0gcneeegh7167sqcior90t5mm.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
