@@ -3,18 +3,21 @@ package com.example.victoria.cognusapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import classes.Usuario;
 
-public class RegistrarActivity extends AppCompatActivity {
+public class RegistrarActivity extends AppCompatActivity implements android.widget.SearchView.OnQueryTextListener {
     ArrayList<String> topicos;
     Usuario usuarioAtual;
+    AdapterTopicos adapterTopicos;
+    android.widget.SearchView mSearchView;
+    ListView listTopicos;
 
     protected void criarTopicos() {
         topicos = new ArrayList<String>();
@@ -32,10 +35,19 @@ public class RegistrarActivity extends AppCompatActivity {
         Intent intent = getIntent();
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
 
-        ListView listTopicos = (ListView) findViewById(R.id.listTopicos);
+        listTopicos = (ListView) findViewById(R.id.listTopicos);
         criarTopicos();
-        AdapterTopicos adapterTopicos = new AdapterTopicos(topicos, this);
+        adapterTopicos = new AdapterTopicos(topicos, this);
         listTopicos.setAdapter(adapterTopicos);
+
+        listTopicos.setTextFilterEnabled(false);
+
+        mSearchView=(android.widget.SearchView) findViewById(R.id.buscar_topicos);
+
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.setOnQueryTextListener(this);
+        //mSearchView.setSubmitButtonEnabled(true);
+        //mSearchView.setQueryHint("Procure mais categorias");
     }
 
     public void finalizarRegistro(View view) {
@@ -51,5 +63,16 @@ public class RegistrarActivity extends AppCompatActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        adapterTopicos.getFilter().filter(newText);
+        return true;
     }
 }
