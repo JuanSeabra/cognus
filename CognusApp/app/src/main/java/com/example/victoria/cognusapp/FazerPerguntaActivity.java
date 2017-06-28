@@ -20,7 +20,7 @@ public class FazerPerguntaActivity extends AppCompatActivity {
         //adicionar a nova pergunta no banco
         //processar a extração de topicos
 
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

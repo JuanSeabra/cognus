@@ -46,7 +46,7 @@ public class RegistrarActivity extends AppCompatActivity {
             usuarioAtual.setNome(txtNome.getText().toString());
 
             //proxima pagina
-            Intent intent = new Intent(this, HomePageActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("usuario", usuarioAtual);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);

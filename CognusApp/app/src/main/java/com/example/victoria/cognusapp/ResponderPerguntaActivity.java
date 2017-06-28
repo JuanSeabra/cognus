@@ -23,7 +23,7 @@ public class ResponderPerguntaActivity extends AppCompatActivity {
     }
 
     public void responder(View view) {
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

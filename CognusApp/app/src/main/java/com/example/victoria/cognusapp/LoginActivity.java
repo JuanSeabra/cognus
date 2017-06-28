@@ -186,7 +186,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         if (AccessToken.getCurrentAccessToken() != null) {
             Profile.getCurrentProfile();
-            Intent intent = new Intent(this, HomePageActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -221,7 +221,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         } else {
             /* Login success */
             //Application.getInstance().setLogoutCallable(logout);
-            Intent intent = new Intent(this, HomePageActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
@@ -232,7 +232,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         if (result.isSuccess()) {
             // Signed in successfully, show authenticated UI.
             GoogleSignInAccount acct = result.getSignInAccount();
-            Intent intent = new Intent(this, HomePageActivity.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         } else {
@@ -424,7 +424,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     }
 
     public void navegarPaginaPrincipal() {
-        Intent intent = new Intent(this, HomePageActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("usuario", userAtual);
         startActivity(intent);
     }
