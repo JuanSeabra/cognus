@@ -4,6 +4,72 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.victoria.cognusapp.PerguntasRespostasUsuarioActivity">
+    tools:context="com.example.victoria.cognusapp.PerguntasRespostasUsuarioActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
+    <TextView
+        android:id="@+id/nome_usuario"
+        android:layout_width="0dp"
+        android:layout_height="42dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginStart="2dp"
+        android:gravity="center"
+        android:text="Ciclano da Costa"
+        android:textSize="25dp"
+        android:layout_marginLeft="2dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="2dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintLeft_creator="1" />
+
+    <ListView
+        android:id="@+id/perguntas"
+        android:layout_width="0dp"
+        android:layout_height="414dp"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <ImageView
+        android:id="@+id/icone"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="117dp"
+        app:srcCompat="@drawable/icone_pessoa"
+        app:layout_constraintBottom_toTopOf="@+id/perguntas"
+        android:layout_marginLeft="117dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nome_usuario"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1" />
+
+    <TextView
+        android:id="@+id/numero_seguidores"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:gravity="center"
+        android:text="5.000.000"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/icone"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/perguntas"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@+id/nome_usuario"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1" />
 </android.support.constraint.ConstraintLayout>

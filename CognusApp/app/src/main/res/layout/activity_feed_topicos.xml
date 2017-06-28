@@ -37,7 +37,7 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
     <ImageView
-        android:id="@+id/icone_pessoas"
+        android:id="@+id/icone"
         android:layout_width="30dp"
         android:layout_height="0dp"
         app:srcCompat="@drawable/icone_pessoa"
@@ -57,7 +57,7 @@
         android:layout_height="0dp"
         android:gravity="center"
         android:text="5.000.000"
-        app:layout_constraintLeft_toRightOf="@+id/icone_pessoas"
+        app:layout_constraintLeft_toRightOf="@+id/icone"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
