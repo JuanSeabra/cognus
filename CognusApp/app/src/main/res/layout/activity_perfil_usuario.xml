@@ -4,6 +4,171 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.victoria.cognusapp.PerfilUsuarioActivity">
+    tools:context="com.example.victoria.cognusapp.PerfilUsuarioActivity"
+    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteX="0dp">
 
+    <View
+        android:id="@+id/retangulo"
+        android:layout_width="0dp"
+        android:layout_height="197dp"
+        android:background="@drawable/drawable_contorno"
+        android:layout_marginRight="6dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginLeft="6dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.533"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginTop="2dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ListView
+        android:id="@+id/lista_topicos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginLeft="1dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="1dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="14dp"
+        app:layout_constraintTop_toBottomOf="@+id/texto"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="3dp" />
+
+    <TextView
+        android:id="@+id/nome_usuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fulano da Silva"
+        android:textSize="20dp"
+        tools:layout_constraintTop_creator="1"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="1dp"
+        app:layout_constraintTop_toBottomOf="@+id/numero_seguidores"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toRightOf="@+id/perguntou" />
+
+    <ImageView
+        android:id="@+id/foto_usuario"
+        android:layout_width="145dp"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/icone_pessoa"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/numero_seguidores"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="1dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/seguidores"
+        android:layout_width="30dp"
+        android:layout_height="0dp"
+        app:srcCompat="@drawable/icone_pessoa"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/nome_usuario"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="2dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/nome_usuario"
+        app:layout_constraintTop_toTopOf="@+id/numero_seguidores" />
+
+    <TextView
+        android:id="@+id/numero_seguidores"
+        android:layout_width="0dp"
+        android:layout_height="34dp"
+        android:gravity="center"
+        android:text="500"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/respondeu"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintRight_toRightOf="@+id/nome_usuario"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="35dp"
+        app:layout_constraintLeft_toRightOf="@+id/seguidores" />
+
+    <TextView
+        android:id="@+id/perguntou"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Perguntou: 100"
+        tools:layout_constraintBottom_creator="1"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/retangulo"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/respondeu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Respondeu: 300"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toBottomOf="@+id/retangulo"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="15dp" />
+
+    <TextView
+        android:id="@+id/email"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:text="Email: fulano@bol.com.br"
+        android:gravity="center"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/instituicao"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/retangulo"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/instituicao"
+        android:layout_width="0dp"
+        android:layout_height="24dp"
+        android:text="Instituição: Universidade da Bolinha"
+        android:gravity="center"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/lista_topicos"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintRight_toRightOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="52dp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <TextView
+        android:id="@+id/texto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seus tópicos"
+        android:textSize="20dp"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        app:layout_constraintRight_toRightOf="@+id/instituicao"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toBottomOf="@+id/retangulo"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="@+id/instituicao" />
 </android.support.constraint.ConstraintLayout>
