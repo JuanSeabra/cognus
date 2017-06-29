@@ -44,7 +44,7 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater()
-                .inflate(R.layout.activity_layout_cadastro_topicos, parent, false);
+                .inflate(R.layout.activity_layout_lista_topicos, parent, false);
         String topico = topicos.get(position);
 
         TextView lblTopico = (TextView) view.findViewById(R.id.lblTopico);

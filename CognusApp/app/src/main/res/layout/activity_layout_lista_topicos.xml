@@ -7,7 +7,7 @@
     tools:context="com.example.victoria.cognusapp.layout_lista_topicos">
 
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/lblTopico"
         android:layout_width="0dp"
         android:layout_height="70dp"
         android:layout_marginEnd="8dp"

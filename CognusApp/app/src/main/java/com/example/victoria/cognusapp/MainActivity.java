@@ -16,6 +16,10 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.facebook.AccessToken;
+import com.facebook.CallbackManager;
+import com.facebook.Profile;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity
     private Resposta r11;
     private Resposta r21;
     private Resposta r22;
+    private CallbackManager mFacebookCallbackManager;
 
     public void criarPerguntas() {
         p1 = new Pergunta("Qual a raiz de 1069?", "",1,3);
@@ -155,6 +160,14 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.logout) {
             //implementar o logout
+
+            //FACEBOOK
+           /* if (AccessToken.getCurrentAccessToken() != null) {
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }*/
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
