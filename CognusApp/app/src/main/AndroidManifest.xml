@@ -58,14 +58,12 @@
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <activity android:name=".layout_resultado_busca"></activity>
-        
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".layout_resultado_busca" />
+        <activity android:name=".layout_lista_topicos"></activity>
     </application>
 
 </manifest>
