@@ -19,6 +19,7 @@ import android.widget.ListView;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.Profile;
+import com.facebook.login.LoginManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -168,6 +169,15 @@ public class MainActivity extends AppCompatActivity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }*/
+            if (Profile.getCurrentProfile() != null)
+                System.out.println(Profile.getCurrentProfile().getName() + "Email: " );
+            if (LoginManager.getInstance() != null)
+                LoginManager.getInstance().logOut();
+
+            Intent intent = new Intent(this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
