@@ -10,7 +10,7 @@ import retrofit2.http.POST;
  */
 
 public interface PerguntaService {
-    public static final String URL_BASE="http://192.168.1.132/ws/";
+    public static final String URL_BASE="http://192.168.43.67/ws/";
 
     @Headers("Content-type: application/json")
     @POST("usuarios/cadastrarUsuario")

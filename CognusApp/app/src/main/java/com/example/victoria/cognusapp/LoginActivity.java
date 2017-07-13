@@ -198,13 +198,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                     @Override
                     public void onCancel() {
-                        handleSignInResult(null);
+                        //handleSignInResult(null);
                     }
 
                     @Override
                     public void onError(FacebookException error) {
                         Log.d(LoginActivity.class.getCanonicalName(), error.getMessage());
-                        handleSignInResult(null);
+                        //handleSignInResult(null);
                     }
                 }
         );
