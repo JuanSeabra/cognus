@@ -1,11 +1,9 @@
 package classes;
 
-import java.util.HashMap;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.FieldMap;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -24,5 +22,5 @@ public interface UsuarioService {
     @POST("usuarios/consultarUsuarioEmail")
     Call<Usuario> buscarUsuarioEmail(@Body String email);
     @POST("usuarios/autenticarUsuario")
-    Call<Usuario> autenticarUsuario(@Body HashMap<String, String> email_senha);
+    Call<Usuario> autenticarUsuario(@Body Usuario usuario);
 }

@@ -59,10 +59,17 @@ import org.json.JSONObject;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import classes.Usuario;
+import classes.UsuarioService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -82,13 +89,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     //lista de usuarios
 
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world",
-            "admin@admin.com:admin"
-    };
 
     private List<Usuario> usuarios;
     private Usuario userAtual;
+    private UsuarioService usuarioService;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -113,13 +117,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         setContentView(R.layout.activity_login);
 
-        usuarios = new ArrayList<Usuario>();
-        Usuario user = new Usuario("Administrador","admin@teste.com","admin");
-        Usuario user2 = new Usuario("João","joao@teste.com","123");
-        Usuario user3 = new Usuario("Maria","maria@teste.com","123");
-        usuarios.add(user);
-        usuarios.add(user2);
-        usuarios.add(user3);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.43.67:8080/COGNUSWS/ws/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        usuarioService = retrofit.create(UsuarioService.class);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -466,6 +469,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
+            System.out.println("Requisicao");
+            Usuario usuario = new Usuario(mEmail,mPassword);
+            //System.out.println(usuarioAtual.getUser_name() + " " + usuarioAtual.getUser_email());
+            //Call<Usuario> chamada1 = usuarioService.autenticarUsuario(map);
+            Call<Usuario> chamada1 = usuarioService.autenticarUsuario(usuario);
+            chamada1.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    userAtual = response.body();
+                    //Toast.makeText(getApplicationContext(), userAtual.getUser_name() + " " + userAtual.getUser_id(),Toast.LENGTH_SHORT).show();
+                    //System.out.println("Resposta: " + userAtual.getUser_email());
+                }
+
+                @Override
+                public void onFailure(Call<Usuario> call, Throwable t) {
+                    //Log.i("Erro", t.getMessage());
+                    //Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if(userAtual == null){
+                return false;
+            }
+
+            else{
+                return true;
+            }
+
+            /*
             for (Usuario usuario : usuarios) {
                 if (usuario.getUser_email().equals(mEmail)) {
                     // Account exists, return true if the password matches.
@@ -474,7 +506,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
 
-            return false;
+            return false;*/
         }
 
         @Override
