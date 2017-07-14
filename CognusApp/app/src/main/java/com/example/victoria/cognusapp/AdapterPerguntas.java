@@ -59,7 +59,7 @@ public class AdapterPerguntas extends BaseAdapter {
         String tags = "Tag1 Tag2 Tag3";
         lblTags.setText(tags);
         lblPergunta.setText(pergunta.gettexto_perg());
-        System.out.println(usuarios.get(respostas.get(position).getuser_id()-1).getUser_name());
+        //System.out.println(usuarios.get(respostas.get(position).getuser_id()-1).getUser_name());
         lblNomeUsuario.setText("teste");
         lblResposta.setText(respostas.get(position).gettexto_resp());
 

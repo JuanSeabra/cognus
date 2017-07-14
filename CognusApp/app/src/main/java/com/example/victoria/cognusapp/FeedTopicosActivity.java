@@ -34,9 +34,10 @@ public class FeedTopicosActivity extends AppCompatActivity {
     }
 
     public void criarRespostas() {
-        r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,1,1);
-        r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,1,2);
-        r22 = new Resposta("A cor mais bonita é azul", 2,1,3,2);
+        Usuario usuario = new Usuario("pudim","g@g", "dssdds");
+        r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuario,1);
+        r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuario,2);
+        r22 = new Resposta("A cor mais bonita é azul", 2,1,usuario,2);
         respostas.add(r11);
         respostas.add(r21);
         respostas.add(r22);
