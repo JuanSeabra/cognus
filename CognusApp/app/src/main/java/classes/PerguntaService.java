@@ -17,6 +17,6 @@ public interface PerguntaService {
     public static final String URL_BASE= Resources.getSystem().getString(R.string.ip_requisicao);
 
     @Headers("Content-type: application/json")
-    @POST("usuarios/cadastrarUsuario")
+    @POST("perguntas/cadastrarPergunta")
     Call<Pergunta> cadastrarPergunta(@Body Pergunta pergunta);
 }

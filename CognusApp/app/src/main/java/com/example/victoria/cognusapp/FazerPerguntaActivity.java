@@ -41,14 +41,14 @@ public class FazerPerguntaActivity extends AppCompatActivity {
         EditText txtTitulo = (EditText) findViewById(R.id.txtTitulo);
         EditText txtPerg = (EditText) findViewById(R.id.txtPergunta);
 
-        final Pergunta pergunta = new Pergunta(txtPerg.toString(), txtTitulo.toString(), usuarioAtual.getUser_id());
+        Pergunta pergunta = new Pergunta(txtPerg.getText().toString(), txtTitulo.getText().toString(), usuarioAtual);
 
         Call<Pergunta> chamada1 = perguntaService.cadastrarPergunta(pergunta);
         chamada1.enqueue(new Callback<Pergunta>() {
             @Override
             public void onResponse(Call<Pergunta> call, Response<Pergunta> response) {
                 Pergunta pergunta_servidor = response.body();
-                Toast.makeText(getApplicationContext(), pergunta.gettexto_perg() + " " + pergunta.getDescricao(),
+                Toast.makeText(getApplicationContext(), pergunta_servidor.gettexto_perg() + " " + pergunta_servidor.getDescricao(),
                         Toast.LENGTH_SHORT).show();
             }
 

@@ -10,9 +10,9 @@ public class Pergunta implements Serializable{
     private int perg_id;
     private String texto_perg;
     private String descricao;
-    private int user_id;
+    private Usuario user_id;
 
-    public Pergunta(String texto_perg, String descricao, int user_id) {
+    public Pergunta(String texto_perg, String descricao, Usuario user_id) {
         this.perg_id = 0;
         this.texto_perg = texto_perg;
         this.descricao = descricao;
@@ -25,7 +25,7 @@ public class Pergunta implements Serializable{
         this.descricao = descricao;
     }
 
-    public Pergunta(String texto_perg, String descricao, int perg_id, int user_id) {
+    public Pergunta(String texto_perg, String descricao, int perg_id, Usuario user_id) {
         this.perg_id = perg_id;
         this.texto_perg = texto_perg;
         this.descricao = descricao;
@@ -55,11 +55,11 @@ public class Pergunta implements Serializable{
         this.descricao = descricao;
     }
 
-    public int getuser_id() {
+    public Usuario getuser_id() {
         return user_id;
     }
 
-    public void setuser_id(int user_id) {
+    public void setuser_id(Usuario user_id) {
         this.user_id = user_id;
     }
 }

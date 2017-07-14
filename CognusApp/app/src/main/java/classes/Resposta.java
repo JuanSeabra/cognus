@@ -9,13 +9,13 @@ public class Resposta {
     private int num_votos_positivos;
     private int num_votos_negativos;
     private int resp_id;
-    private int user_id;
+    private Usuario user_id;
 
-    public int getuser_id() {
+    public Usuario getuser_id() {
         return user_id;
     }
 
-    public void setuser_id(int user_id) {
+    public void setuser_id(Usuario user_id) {
         this.user_id = user_id;
     }
 
@@ -29,7 +29,7 @@ public class Resposta {
 
     private int pergunta;
 
-    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int resp_id, int user_id, int pergunta) {
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int resp_id, Usuario user_id, int pergunta) {
         this.texto_resp = texto_resp;
         this.num_votos_positivos = num_votos_positivos;
         this.num_votos_negativos = num_votos_negativos;
@@ -38,7 +38,7 @@ public class Resposta {
         this.pergunta = pergunta;
     }
 
-    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int user_id, int pergunta) {
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, Usuario user_id, int pergunta) {
         this.texto_resp = texto_resp;
         this.num_votos_positivos = num_votos_positivos;
         this.num_votos_negativos = num_votos_negativos;

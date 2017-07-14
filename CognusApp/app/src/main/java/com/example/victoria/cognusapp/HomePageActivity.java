@@ -27,8 +27,8 @@ public class HomePageActivity extends AppCompatActivity {
     private Resposta r22;
 
     public void criarPerguntas() {
-        p1 = new Pergunta("Qual a raiz de 1069?", "",1,3);
-        p2 = new Pergunta("Qual a cor mais bonita do mundo?", "",2,2);
+        p1 = new Pergunta("Qual a raiz de 1069?", "",1,usuarioAtual);
+        p2 = new Pergunta("Qual a cor mais bonita do mundo?", "",2,usuarioAtual);
         perguntas.add(p1);
         perguntas.add(p2);
     }
