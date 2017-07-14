@@ -44,7 +44,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.132:8080/COGNUSWS/ws/")
+                .baseUrl(getString(R.string.ip_requisicao))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

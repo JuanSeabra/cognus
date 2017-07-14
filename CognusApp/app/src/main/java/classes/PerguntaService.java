@@ -1,5 +1,9 @@
 package classes;
 
+import android.content.res.Resources;
+
+import com.example.victoria.cognusapp.R;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
@@ -10,7 +14,7 @@ import retrofit2.http.POST;
  */
 
 public interface PerguntaService {
-    public static final String URL_BASE="http://192.168.43.67/ws/";
+    public static final String URL_BASE= Resources.getSystem().getString(R.string.ip_requisicao);
 
     @Headers("Content-type: application/json")
     @POST("usuarios/cadastrarUsuario")

@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.67:8080/COGNUSWS/ws/")
+                .baseUrl(getString(R.string.ip_requisicao))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

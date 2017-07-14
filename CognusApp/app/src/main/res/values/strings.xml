@@ -4,6 +4,8 @@
     <string name="title_activity_responder">Responder Pergunta</string>
     <string name="title_activity_perguntar">Nova Pergunta</string>
     <string name="titulos">Cognus</string>
+    <string name="ip_requisicao">http://192.168.43.67:8080/COGNUSWS/ws/</string>
+    <string name="ip_interface">http://192.168.43.67/ws/</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
