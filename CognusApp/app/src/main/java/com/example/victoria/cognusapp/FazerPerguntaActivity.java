@@ -3,19 +3,63 @@ package com.example.victoria.cognusapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import classes.Pergunta;
+import classes.PerguntaService;
+import classes.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class FazerPerguntaActivity extends AppCompatActivity {
+    Usuario usuarioAtual;
+    private PerguntaService perguntaService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fazer_pergunta);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        perguntaService = retrofit.create(PerguntaService.class);
+
+        Intent intent = getIntent();
+        usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
     }
 
     public void fazerPergunta(View view) {
-        EditText txtArea = (EditText) findViewById(R.id.txtPergunta);
+        EditText txtTitulo = (EditText) findViewById(R.id.txtTitulo);
+        EditText txtPerg = (EditText) findViewById(R.id.txtPergunta);
+
+        final Pergunta pergunta = new Pergunta(txtPerg.toString(), txtTitulo.toString(), usuarioAtual.getUser_id());
+
+        Call<Pergunta> chamada1 = perguntaService.cadastrarPergunta(pergunta);
+        chamada1.enqueue(new Callback<Pergunta>() {
+            @Override
+            public void onResponse(Call<Pergunta> call, Response<Pergunta> response) {
+                Pergunta pergunta_servidor = response.body();
+                Toast.makeText(getApplicationContext(), pergunta.gettexto_perg() + " " + pergunta.getDescricao(),
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Pergunta> call, Throwable t) {
+                Log.i("Erro", t.getMessage());
+                Toast.makeText(getApplicationContext(), "Falha na conexão",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
         //adicionar a nova pergunta no banco
         //processar a extração de topicos

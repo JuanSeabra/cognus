@@ -49,25 +49,6 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
                 .build();
 
         usuarioService = retrofit.create(UsuarioService.class);
-        usuarioAtual.setUser_name("Juan");
-
-        //testando
-        /*Call<Usuario> chamada1 = usuarioService.cadastrarUsuario(usuarioAtual);
-        chamada1.enqueue(new Callback<Usuario>() {
-            @Override
-            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Usuario user = response.body();
-                Log.i("Retorna",user.getUser_name() + " " + user.getUser_id());
-               // Toast.makeText(getApplicationContext(), user.getUser_name() + " " + user.getUser_id(),
-                //          Toast.LENGTH_SHORT).show();
-                System.out.println("Resposta: " + user.getUser_email());
-            }
-
-            @Override
-            public void onFailure(Call<Usuario> call, Throwable t) {
-                Log.i("Erro", t.getMessage());
-            }
-        });*/
 
         listTopicos = (ListView) findViewById(R.id.listTopicos);
         criarTopicos();
