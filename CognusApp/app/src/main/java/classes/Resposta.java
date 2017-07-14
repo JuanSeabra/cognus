@@ -15,7 +15,7 @@ public class Resposta {
         return user_id;
     }
 
-    public voresp_id setuser_id(int user_id) {
+    public void setuser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -23,7 +23,7 @@ public class Resposta {
         return pergunta;
     }
 
-    public voresp_id setPergunta(int pergunta) {
+    public void setPergunta(int pergunta) {
         this.pergunta = pergunta;
     }
 
@@ -50,7 +50,7 @@ public class Resposta {
         return texto_resp;
     }
 
-    public voresp_id settexto_resp(String texto_resp) {
+    public void settexto_resp(String texto_resp) {
         this.texto_resp = texto_resp;
     }
 
@@ -58,7 +58,7 @@ public class Resposta {
         return num_votos_positivos;
     }
 
-    public voresp_id setnum_votos_positivos(int num_votos_positivos) {
+    public void setnum_votos_positivos(int num_votos_positivos) {
         this.num_votos_positivos = num_votos_positivos;
     }
 
@@ -66,7 +66,7 @@ public class Resposta {
         return num_votos_negativos;
     }
 
-    public voresp_id setnum_votos_negativos(int num_votos_negativos) {
+    public void setnum_votos_negativos(int num_votos_negativos) {
         this.num_votos_negativos = num_votos_negativos;
     }
 
@@ -74,7 +74,7 @@ public class Resposta {
         return resp_id;
     }
 
-    public voresp_id setresp_id(int resp_id) {
+    public void setresp_id(int resp_id) {
         this.resp_id = resp_id;
     }
 }

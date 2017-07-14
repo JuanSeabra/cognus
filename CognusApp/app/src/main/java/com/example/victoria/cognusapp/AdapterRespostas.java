@@ -53,7 +53,7 @@ public class AdapterRespostas extends BaseAdapter {
 
         String tags = "Tag1 Tag2 Tag3";
         lblNomeUsuario.setText(usuarios[position]);
-        lblResposta.setText(respostas.get(position).getTexto());
+        lblResposta.setText(respostas.get(position).gettexto_resp());
         return view;
     }
 }

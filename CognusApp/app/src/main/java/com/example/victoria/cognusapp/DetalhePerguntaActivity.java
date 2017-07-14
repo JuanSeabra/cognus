@@ -37,14 +37,14 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         pergSelecionada = (Pergunta) intent.getSerializableExtra("pergunta");
 
         TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
-        txtPergunta.setText(pergSelecionada.getTexto());
+        txtPergunta.setText(pergSelecionada.gettexto_perg());
 
         ListView lstRespostas = (ListView) findViewById(R.id.lstRespostas);
         List<Resposta> r2 = new ArrayList<>();
         criarRespostas();
         for (Resposta r: respostas) {
-            System.out.println(pergSelecionada.getId());
-            if (r.getPergunta() == pergSelecionada.getId()) {
+            System.out.println(pergSelecionada.getperg_id());
+            if (r.getPergunta() == pergSelecionada.getperg_id()) {
                 r2.add(r);
             }
         }

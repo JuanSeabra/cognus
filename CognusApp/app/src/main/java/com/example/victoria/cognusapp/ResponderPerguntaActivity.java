@@ -19,7 +19,7 @@ public class ResponderPerguntaActivity extends AppCompatActivity {
         Pergunta pergunta = (Pergunta) intent.getSerializableExtra("pergunta");
 
         TextView txtPerg = (TextView) findViewById(R.id.txtPerguntaDesc);
-        txtPerg.setText(pergunta.getTexto());
+        txtPerg.setText(pergunta.gettexto_perg());
     }
 
     public void responder(View view) {

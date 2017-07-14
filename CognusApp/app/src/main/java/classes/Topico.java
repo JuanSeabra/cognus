@@ -22,7 +22,7 @@ public class Topico {
         return topico_id;
     }
 
-    public votopico_id settopico_id(int topico_id) {
+    public void settopico_id(int topico_id) {
         this.topico_id = topico_id;
     }
 
@@ -30,7 +30,7 @@ public class Topico {
         return descricao_topico;
     }
 
-    public votopico_id setdescricao_topico(String descricao_topico) {
+    public void setdescricao_topico(String descricao_topico) {
         this.descricao_topico = descricao_topico;
     }
 
@@ -38,7 +38,7 @@ public class Topico {
         return num_seguidores;
     }
 
-    public votopico_id setnum_seguidores(int num_seguidores) {
+    public void setnum_seguidores(int num_seguidores) {
         this.num_seguidores = num_seguidores;
     }
 }
