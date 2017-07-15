@@ -58,15 +58,15 @@ public class AdapterPerguntas extends BaseAdapter {
 
         String tags = "Tag1 Tag2 Tag3";
         lblTags.setText(tags);
-        lblPergunta.setText(pergunta.getTexto());
-        System.out.println(usuarios.get(respostas.get(position).getUsuario()-1).getUser_name());
+        lblPergunta.setText(pergunta.gettexto_perg());
+        //System.out.println(usuarios.get(respostas.get(position).getuser_id()-1).getUser_name());
         lblNomeUsuario.setText("teste");
-        lblResposta.setText(respostas.get(position).getTexto());
+        lblResposta.setText(respostas.get(position).gettexto_resp());
 
         Integer cont = new Integer(0);
         for (int i = 0; i < respostas.size(); i++) {
             Resposta r = respostas.get(i);
-            if (r.getPergunta() == pergunta.getId())
+            if (r.getPergunta() == pergunta.getperg_id())
                 cont++;
         }
         lblNumResp.setText(cont.toString() + " resposta(s)");

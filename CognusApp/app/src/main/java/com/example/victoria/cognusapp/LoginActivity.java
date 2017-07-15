@@ -39,6 +39,8 @@ import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
@@ -51,12 +53,23 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.Callable;
 
 import classes.Usuario;
+import classes.UsuarioService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -64,25 +77,10 @@ import static android.Manifest.permission.READ_CONTACTS;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
-
-    /**
-     * Id to identity READ_CONTACTS permission request.
-     */
     private static final int REQUEST_READ_CONTACTS = 0;
-
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    //lista de usuarios
-
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world",
-            "admin@admin.com:admin"
-    };
-
     private List<Usuario> usuarios;
     private Usuario userAtual;
+    private UsuarioService usuarioService;
 
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
@@ -96,9 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private CallbackManager mFacebookCallbackManager;
     private LoginButton mFacebookSignInButton;
-    private SignInButton mGoogleSignInButton;
-    private static final int RC_SIGN_IN = 9001;
-    private GoogleApiClient mGoogleApiClient;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,26 +102,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         FacebookSdk.sdkInitialize(getApplicationContext());
         mFacebookCallbackManager = CallbackManager.Factory.create();
 
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
-
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
-                .build();
 
         setContentView(R.layout.activity_login);
 
-        usuarios = new ArrayList<Usuario>();
-        Usuario user = new Usuario("Administrador","admin@teste.com","admin");
-        Usuario user2 = new Usuario("João","joao@teste.com","123");
-        Usuario user3 = new Usuario("Maria","maria@teste.com","123");
-        usuarios.add(user);
-        usuarios.add(user2);
-        usuarios.add(user3);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        usuarioService = retrofit.create(UsuarioService.class);
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -156,11 +141,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         //Depois usar estes mecanismos para implementar o logout
         //FACEBOOK
         mFacebookSignInButton = (LoginButton)findViewById(R.id.facebook_sign_in_button);
+        mFacebookSignInButton.setReadPermissions(Arrays.asList(
+                "public_profile", "email"));
 
         mFacebookSignInButton.registerCallback(mFacebookCallbackManager,
                 new FacebookCallback<LoginResult>() {
                     @Override
                     public void onSuccess(final LoginResult loginResult) {
+                        /*
                         //TODO: Use the Profile class to get information about the current user.
                         handleSignInResult(new Callable<Void>() {
                             @Override
@@ -168,18 +156,46 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                 LoginManager.getInstance().logOut();
                                 return null;
                             }
-                        });
+                        });*/
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(JSONObject object, GraphResponse response) {
+                                        Log.v("LoginActivity", response.toString());
+
+                                        // Application code
+                                        try {
+                                            String email = object.getString("email");
+                                            //System.out.println(email);
+                                            //navegar para a proxima tela
+                                            handleSignInResult(new Callable<Void>() {
+                                                @Override
+                                                public Void call() throws Exception {
+                                                    LoginManager.getInstance().logOut();
+                                                    return null;
+                                                }
+                                            }, email);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender,birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
                     }
 
                     @Override
                     public void onCancel() {
-                        handleSignInResult(null);
+                        //handleSignInResult(null);
                     }
 
                     @Override
                     public void onError(FacebookException error) {
                         Log.d(LoginActivity.class.getCanonicalName(), error.getMessage());
-                        handleSignInResult(null);
+                        //handleSignInResult(null);
                     }
                 }
         );
@@ -191,20 +207,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             startActivity(intent);
         }
 
-        //GOOGLE
-        mGoogleSignInButton = (SignInButton)findViewById(R.id.google_sign_in_button);
-        mGoogleSignInButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signInWithGoogle();
-            }
-        });
     }
 
-    private void signInWithGoogle() {
-        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-    }
 
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
@@ -214,7 +218,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         getLoaderManager().initLoader(0, null, this);
     }
 
-    private void handleSignInResult(Callable<Void> logout) {
+    private void handleSignInResult(Callable<Void> logout, String email) {
         if(logout == null) {
             /* Login error */
             Toast.makeText(getApplicationContext(), "Erro de login", Toast.LENGTH_SHORT).show();
@@ -227,19 +231,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
     }
 
-    private void handleSignInResultG(GoogleSignInResult result) {
-
-        if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-        } else {
-            // Signed out, show unauthenticated UI.
-            Toast.makeText(getApplicationContext(), "Erro de login", Toast.LENGTH_SHORT).show();
-        }
-    }
 
     private boolean mayRequestContacts() {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
@@ -466,6 +457,35 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
+            System.out.println("Requisicao");
+            Usuario usuario = new Usuario(mEmail,mPassword);
+            //System.out.println(usuarioAtual.getUser_name() + " " + usuarioAtual.getUser_email());
+            //Call<Usuario> chamada1 = usuarioService.autenticarUsuario(map);
+            Call<Usuario> chamada1 = usuarioService.autenticarUsuario(usuario);
+            chamada1.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    userAtual = response.body();
+                    //Toast.makeText(getApplicationContext(), userAtual.getUser_name() + " " + userAtual.getUser_id(),Toast.LENGTH_SHORT).show();
+                    //System.out.println("Resposta: " + userAtual.getUser_email());
+                }
+
+                @Override
+                public void onFailure(Call<Usuario> call, Throwable t) {
+                    //Log.i("Erro", t.getMessage());
+                    //Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            if(userAtual == null){
+                return false;
+            }
+
+            else{
+                return true;
+            }
+
+            /*
             for (Usuario usuario : usuarios) {
                 if (usuario.getUser_email().equals(mEmail)) {
                     // Account exists, return true if the password matches.
@@ -474,7 +494,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 }
             }
 
-            return false;
+            return false;*/
         }
 
         @Override
@@ -503,12 +523,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onActivityResult(requestCode, resultCode, data);
         //FACEBOOK
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
-
-        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            handleSignInResultG(result);
-        }
     }
 }
 

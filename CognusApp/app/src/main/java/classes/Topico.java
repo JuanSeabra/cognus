@@ -5,40 +5,40 @@ package classes;
  */
 
 public class Topico {
-    private int id;
-    private String descricao;
+    private int topico_id;
+    private String descricao_topico;
     private int num_seguidores;
 
-    public Topico(String descricao) {
-        this.descricao = descricao;
+    public Topico(String descricao_topico) {
+        this.descricao_topico = descricao_topico;
     }
 
-    public Topico(String descricao, int num_seguidores) {
-        this.descricao = descricao;
+    public Topico(String descricao_topico, int num_seguidores) {
+        this.descricao_topico = descricao_topico;
         this.num_seguidores = num_seguidores;
     }
 
-    public int getId() {
-        return id;
+    public int gettopico_id() {
+        return topico_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void settopico_id(int topico_id) {
+        this.topico_id = topico_id;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getdescricao_topico() {
+        return descricao_topico;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setdescricao_topico(String descricao_topico) {
+        this.descricao_topico = descricao_topico;
     }
 
-    public int getNum_seguidores() {
+    public int getnum_seguidores() {
         return num_seguidores;
     }
 
-    public void setNum_seguidores(int num_seguidores) {
+    public void setnum_seguidores(int num_seguidores) {
         this.num_seguidores = num_seguidores;
     }
 }

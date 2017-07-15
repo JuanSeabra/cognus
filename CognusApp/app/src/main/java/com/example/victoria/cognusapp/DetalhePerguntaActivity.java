@@ -14,15 +14,17 @@ import java.util.List;
 
 import classes.Pergunta;
 import classes.Resposta;
+import classes.Usuario;
 
 public class DetalhePerguntaActivity extends AppCompatActivity {
     private List<Resposta> respostas = new ArrayList<>();
     Pergunta pergSelecionada;
 
     public void criarRespostas() {
-        Resposta r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,1,1);
-        Resposta r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,1,2);
-        Resposta r22 = new Resposta("A cor mais bonita é azul", 2,1,3,2);
+        Usuario usuario = new Usuario("pudim","g@g", "dssdds");
+        Resposta r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuario,1);
+        Resposta r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuario,2);
+        Resposta r22 = new Resposta("A cor mais bonita é azul", 2,1,usuario,2);
         respostas.add(r11);
         respostas.add(r21);
         respostas.add(r22);
@@ -37,14 +39,14 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         pergSelecionada = (Pergunta) intent.getSerializableExtra("pergunta");
 
         TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
-        txtPergunta.setText(pergSelecionada.getTexto());
+        txtPergunta.setText(pergSelecionada.gettexto_perg());
 
         ListView lstRespostas = (ListView) findViewById(R.id.lstRespostas);
         List<Resposta> r2 = new ArrayList<>();
         criarRespostas();
         for (Resposta r: respostas) {
-            System.out.println(pergSelecionada.getId());
-            if (r.getPergunta() == pergSelecionada.getId()) {
+            System.out.println(pergSelecionada.getperg_id());
+            if (r.getPergunta() == pergSelecionada.getperg_id()) {
                 r2.add(r);
             }
         }

@@ -5,18 +5,18 @@ package classes;
  */
 
 public class Resposta {
-    private String texto;
-    private int positivacoes;
-    private int negativacoes;
-    private int id;
-    private int usuario;
+    private String texto_resp;
+    private int num_votos_positivos;
+    private int num_votos_negativos;
+    private int resp_id;
+    private Usuario user_id;
 
-    public int getUsuario() {
-        return usuario;
+    public Usuario getuser_id() {
+        return user_id;
     }
 
-    public void setUsuario(int usuario) {
-        this.usuario = usuario;
+    public void setuser_id(Usuario user_id) {
+        this.user_id = user_id;
     }
 
     public int getPergunta() {
@@ -29,52 +29,52 @@ public class Resposta {
 
     private int pergunta;
 
-    public Resposta(String texto, int positivacoes, int negativacoes, int id, int usuario, int pergunta) {
-        this.texto = texto;
-        this.positivacoes = positivacoes;
-        this.negativacoes = negativacoes;
-        this.id = id;
-        this.usuario = usuario;
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int resp_id, Usuario user_id, int pergunta) {
+        this.texto_resp = texto_resp;
+        this.num_votos_positivos = num_votos_positivos;
+        this.num_votos_negativos = num_votos_negativos;
+        this.resp_id = resp_id;
+        this.user_id = user_id;
         this.pergunta = pergunta;
     }
 
-    public Resposta(String texto, int positivacoes, int negativacoes, int usuario, int pergunta) {
-        this.texto = texto;
-        this.positivacoes = positivacoes;
-        this.negativacoes = negativacoes;
-        this.usuario = usuario;
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, Usuario user_id, int pergunta) {
+        this.texto_resp = texto_resp;
+        this.num_votos_positivos = num_votos_positivos;
+        this.num_votos_negativos = num_votos_negativos;
+        this.user_id = user_id;
         this.pergunta = pergunta;
     }
 
-    public String getTexto() {
-        return texto;
+    public String gettexto_resp() {
+        return texto_resp;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public void settexto_resp(String texto_resp) {
+        this.texto_resp = texto_resp;
     }
 
-    public int getPositivacoes() {
-        return positivacoes;
+    public int getnum_votos_positivos() {
+        return num_votos_positivos;
     }
 
-    public void setPositivacoes(int positivacoes) {
-        this.positivacoes = positivacoes;
+    public void setnum_votos_positivos(int num_votos_positivos) {
+        this.num_votos_positivos = num_votos_positivos;
     }
 
-    public int getNegativacoes() {
-        return negativacoes;
+    public int getnum_votos_negativos() {
+        return num_votos_negativos;
     }
 
-    public void setNegativacoes(int negativacoes) {
-        this.negativacoes = negativacoes;
+    public void setnum_votos_negativos(int num_votos_negativos) {
+        this.num_votos_negativos = num_votos_negativos;
     }
 
-    public int getId() {
-        return id;
+    public int getresp_id() {
+        return resp_id;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setresp_id(int resp_id) {
+        this.resp_id = resp_id;
     }
 }

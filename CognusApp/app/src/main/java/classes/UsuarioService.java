@@ -1,8 +1,13 @@
 package classes;
 
+import android.content.res.Resources;
+
+import com.example.victoria.cognusapp.R;
+
+import java.util.List;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -11,9 +16,15 @@ import retrofit2.http.POST;
  */
 
 public interface UsuarioService {
-    public static final String URL_BASE="http://192.168.1.132/ws/";
+    public static final String URL_BASE= Resources.getSystem().getString(R.string.ip_requisicao);
 
     @Headers("Content-type: application/json")
     @POST("usuarios/cadastrarUsuario")
     Call<Usuario> cadastrarUsuario(@Body Usuario user);
+    @POST("usuarios/consultarUsuario")
+    Call<Usuario> buscarUsuario(@Body String id);
+    @POST("usuarios/consultarUsuarioEmail")
+    Call<Usuario> buscarUsuarioEmail(@Body String email);
+    @POST("usuarios/autenticarUsuario")
+    Call<Usuario> autenticarUsuario(@Body Usuario usuario);
 }

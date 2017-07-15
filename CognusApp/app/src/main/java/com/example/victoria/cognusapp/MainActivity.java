@@ -42,16 +42,16 @@ public class MainActivity extends AppCompatActivity
     private CallbackManager mFacebookCallbackManager;
 
     public void criarPerguntas() {
-        p1 = new Pergunta("Qual a raiz de 1069?", "",1,3);
-        p2 = new Pergunta("Qual a cor mais bonita do mundo?", "",2,2);
+        p1 = new Pergunta("Qual a raiz de 1069?", "",1,usuarioAtual);
+        p2 = new Pergunta("Qual a cor mais bonita do mundo?", "",2,usuarioAtual);
         perguntas.add(p1);
         perguntas.add(p2);
     }
 
     public void criarRespostas() {
-        r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,1,1);
-        r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,1,2);
-        r22 = new Resposta("A cor mais bonita é azul", 2,1,3,2);
+        r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuarioAtual,1);
+        r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuarioAtual,2);
+        r22 = new Resposta("A cor mais bonita é azul", 2,1,usuarioAtual,2);
         respostas.add(r11);
         respostas.add(r21);
         respostas.add(r22);
@@ -169,10 +169,15 @@ public class MainActivity extends AppCompatActivity
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
             }*/
-            LoginManager.getInstance().logOut();
+            if (Profile.getCurrentProfile() != null)
+                System.out.println(Profile.getCurrentProfile().getName() + "Email: " );
+            if (LoginManager.getInstance() != null)
+                LoginManager.getInstance().logOut();
+
             Intent intent = new Intent(this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

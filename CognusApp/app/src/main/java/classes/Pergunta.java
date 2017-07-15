@@ -7,44 +7,44 @@ import java.io.Serializable;
  */
 
 public class Pergunta implements Serializable{
-    private int id;
-    private String texto;
+    private int perg_id;
+    private String texto_perg;
     private String descricao;
-    private int usuario;
+    private Usuario user_id;
 
-    public Pergunta(String texto, String descricao, int usuario) {
-        this.id = 0;
-        this.texto = texto;
+    public Pergunta(String texto_perg, String descricao, Usuario user_id) {
+        this.perg_id = 0;
+        this.texto_perg = texto_perg;
         this.descricao = descricao;
-        this.usuario = usuario;
+        this.user_id = user_id;
     }
 
-    public Pergunta(String texto, String descricao) {
-        this.id = 0;
-        this.texto = texto;
-        this.descricao = descricao;
-    }
-
-    public Pergunta(String texto, String descricao, int id, int usuario) {
-        this.id = id;
-        this.texto = texto;
+    public Pergunta(String texto_perg, String descricao) {
+        this.perg_id = 0;
+        this.texto_perg = texto_perg;
         this.descricao = descricao;
     }
 
-    public int getId() {
-        return id;
+    public Pergunta(String texto_perg, String descricao, int perg_id, Usuario user_id) {
+        this.perg_id = perg_id;
+        this.texto_perg = texto_perg;
+        this.descricao = descricao;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public int getperg_id() {
+        return perg_id;
     }
 
-    public String getTexto() {
-        return texto;
+    public void setperg_id(int perg_id) {
+        this.perg_id = perg_id;
     }
 
-    public void setTexto(String texto) {
-        this.texto = texto;
+    public String gettexto_perg() {
+        return texto_perg;
+    }
+
+    public void settexto_perg(String texto_perg) {
+        this.texto_perg = texto_perg;
     }
 
     public String getDescricao() {
@@ -55,11 +55,11 @@ public class Pergunta implements Serializable{
         this.descricao = descricao;
     }
 
-    public int getUsuario() {
-        return usuario;
+    public Usuario getuser_id() {
+        return user_id;
     }
 
-    public void setUsuario(int usuario) {
-        this.usuario = usuario;
+    public void setuser_id(Usuario user_id) {
+        this.user_id = user_id;
     }
 }
