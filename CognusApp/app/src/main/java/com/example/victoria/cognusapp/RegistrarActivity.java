@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import classes.UsuarioService;
 import classes.Usuario;
@@ -72,7 +73,11 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
             //pegar os topicos escolhidos
             usuarioAtual.setUser_name(txtNome.getText().toString());
 
-            registrarUsuario(usuarioAtual);
+            //getTopicosdeInteresse.
+
+            List<String> topicosSelecionados= adapterTopicos.getTopicosSelecionados();
+            Toast.makeText(getApplicationContext(), topicosSelecionados.get(0),
+                    Toast.LENGTH_SHORT).show();
 
             //proxima pagina
             Intent intent = new Intent(this, MainActivity.class);
