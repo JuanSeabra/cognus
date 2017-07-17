@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     private List<Usuario> usuarios;
     private Usuario userAtual;
-    private Boolean erro_conexao;
+    private boolean erro_conexao;
     private UsuarioService usuarioService;
 
     /**

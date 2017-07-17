@@ -6,6 +6,7 @@ import com.example.victoria.cognusapp.R;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -19,4 +20,7 @@ public interface PerguntaService {
     @Headers("Content-type: application/json")
     @POST("perguntas/cadastrarPergunta")
     Call<Pergunta> cadastrarPergunta(@Body Pergunta pergunta);
+
+    @GET("perguntas/listarPerguntas")
+    Call<PerguntaList> listarPerguntas();
 }

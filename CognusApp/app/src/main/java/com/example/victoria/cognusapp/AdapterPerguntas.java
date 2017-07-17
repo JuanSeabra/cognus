@@ -60,7 +60,7 @@ public class AdapterPerguntas extends BaseAdapter {
         lblTags.setText(tags);
         lblPergunta.setText(pergunta.gettexto_perg());
         //System.out.println(usuarios.get(respostas.get(position).getuser_id()-1).getUser_name());
-        lblNomeUsuario.setText("teste");
+        lblNomeUsuario.setText("testando");
         lblResposta.setText(respostas.get(position).gettexto_resp());
 
         Integer cont = new Integer(0);

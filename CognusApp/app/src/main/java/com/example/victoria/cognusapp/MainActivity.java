@@ -25,12 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import classes.Pergunta;
+import classes.PerguntaList;
+import classes.PerguntaService;
 import classes.Resposta;
 import classes.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
-    Usuario usuarioAtual;
+        implements NavigationView.OnNavigationItemSelectedListener {Usuario usuarioAtual;
     private List<Usuario> usuarios;
     private List<Pergunta> perguntas = new ArrayList<>();
     private List<Resposta> respostas = new ArrayList<>();
@@ -39,6 +45,10 @@ public class MainActivity extends AppCompatActivity
     private Resposta r11;
     private Resposta r21;
     private Resposta r22;
+    private PerguntaService perguntaService;
+    private AdapterPerguntas adapterPerguntas;
+    private ListView lstPerguntas;
+
     private CallbackManager mFacebookCallbackManager;
 
     public void criarPerguntas() {
@@ -78,28 +88,24 @@ public class MainActivity extends AppCompatActivity
         usuarios.add(user2);
         usuarios.add(user3);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        perguntaService = retrofit.create(PerguntaService.class);
+
         //pegar usuario
         Intent intent = getIntent();
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+        System.out.println(usuarioAtual.toString());
 
         criarPerguntas();
         criarRespostas();
-
         //fazer a parte do list view
-        ListView lstPerguntas = (ListView) findViewById(R.id.lstPerguntasHome);
-        AdapterPerguntas adapterPerguntas = new AdapterPerguntas(perguntas, respostas, usuarios, this);
-
-        lstPerguntas.setAdapter(adapterPerguntas);
-
-        lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Pergunta pergSelecionada = perguntas.get(position);
-                Intent intent1 = new Intent(MainActivity.this, DetalhePerguntaActivity.class);
-                intent1.putExtra("pergunta",pergSelecionada);
-                startActivity(intent1);
-            }
-        });
+        lstPerguntas = (ListView) findViewById(R.id.lstPerguntasHome);
+        //pegar aqui as perguntas
+        obterPerguntas();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -183,5 +189,36 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void obterPerguntas() {
+        System.out.println("Obtendo perguntas");
+        Call<PerguntaList> chamada = perguntaService.listarPerguntas();
+        chamada.enqueue(new Callback<PerguntaList>() {
+            @Override
+            public void onResponse(Call<PerguntaList> call, Response<PerguntaList> response) {
+                PerguntaList perguntaList = response.body();
+                adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), respostas, usuarios, MainActivity.this);
+
+                lstPerguntas.setAdapter(adapterPerguntas);
+
+                lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Pergunta pergSelecionada = perguntas.get(position);
+                        Intent intent1 = new Intent(MainActivity.this, DetalhePerguntaActivity.class);
+                        intent1.putExtra("usuario", usuarioAtual);
+                        intent1.putExtra("pergunta",pergSelecionada);
+                        startActivity(intent1);
+                    }
+                });
+
+            }
+
+            @Override
+            public void onFailure(Call<PerguntaList> call, Throwable t) {
+
+            }
+        });
     }
 }
