@@ -3,10 +3,18 @@ package com.example.victoria.cognusapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import classes.Usuario;
+import classes.UsuarioService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Registrar1 extends AppCompatActivity {
     // UI references.
@@ -14,12 +22,22 @@ public class Registrar1 extends AppCompatActivity {
     private EditText txtConfirmarEmail;
     private EditText txtSenha;
     private EditText txtConfirmarSenha;
+    private UsuarioService usuarioService;
+    private Usuario userAtual;
+    private String email;
+    private String senha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrar1);
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        usuarioService = retrofit.create(UsuarioService.class);
     }
 
     private boolean isEmailValid(String email) {
@@ -44,9 +62,9 @@ public class Registrar1 extends AppCompatActivity {
         txtSenha.setError(null);
         txtConfirmarSenha.setError(null);
 
-        String email = txtEmail.getText().toString();
+        email = txtEmail.getText().toString();
         String confEmail = txtConfirmarEmail.getText().toString();
-        String senha = txtSenha.getText().toString();
+        senha = txtSenha.getText().toString();
         String confSenha = txtConfirmarSenha.getText().toString();
 
         //verificar se nao tem nenhum campo em branco
@@ -69,12 +87,30 @@ public class Registrar1 extends AppCompatActivity {
             txtSenha.requestFocus();
         }
         else {
-            Usuario usuario = new Usuario(email, senha);
-            //pode navegar para a proxima tela
-            Intent intent = new Intent(this, RegistrarActivity.class);
-            intent.putExtra("usuario", usuario);
-            //intent.putExtra("senha", senha);
-            startActivity(intent);
+            Call<Usuario> chamada1 = usuarioService.buscarUsuarioEmail(email);
+            chamada1.enqueue(new Callback<Usuario>() {
+                @Override
+                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                    userAtual = response.body();
+                    if(userAtual != null){
+                        Toast.makeText(getApplicationContext(), "Endereço de e-mail já existe.", Toast.LENGTH_SHORT).show();
+                    }
+
+                    else if(userAtual == null){
+                        userAtual = new Usuario(email, senha);
+                        //pode navegar para a proxima tela
+                        Intent intent = new Intent(getBaseContext(), RegistrarActivity.class);
+                        intent.putExtra("usuario", userAtual);
+                        //intent.putExtra("senha", senha);
+                        startActivity(intent);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Usuario> call, Throwable t) {
+                    Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 }
