@@ -56,6 +56,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -80,6 +81,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private static final int REQUEST_READ_CONTACTS = 0;
     private List<Usuario> usuarios;
     private Usuario userAtual;
+    private Boolean erro_conexao;
     private UsuarioService usuarioService;
 
     /**
@@ -457,25 +459,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return false;
             }
 
-            System.out.println("Requisicao");
             Usuario usuario = new Usuario(mEmail,mPassword);
-            //System.out.println(usuarioAtual.getUser_name() + " " + usuarioAtual.getUser_email());
-            //Call<Usuario> chamada1 = usuarioService.autenticarUsuario(map);
-            Call<Usuario> chamada1 = usuarioService.autenticarUsuario(usuario);
-            chamada1.enqueue(new Callback<Usuario>() {
-                @Override
-                public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                    userAtual = response.body();
-                    //Toast.makeText(getApplicationContext(), userAtual.getUser_name() + " " + userAtual.getUser_id(),Toast.LENGTH_SHORT).show();
-                    //System.out.println("Resposta: " + userAtual.getUser_email());
-                }
 
-                @Override
-                public void onFailure(Call<Usuario> call, Throwable t) {
-                    //Log.i("Erro", t.getMessage());
-                    //Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
-                }
-            });
+            Call<Usuario> chamada1 = usuarioService.autenticarUsuario(usuario);
+            try {
+                userAtual = chamada1.execute().body();
+            } catch (IOException e) {
+                erro_conexao = true;
+                e.printStackTrace();
+            }
 
             if(userAtual == null){
                 return false;
@@ -484,17 +476,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             else{
                 return true;
             }
-
-            /*
-            for (Usuario usuario : usuarios) {
-                if (usuario.getUser_email().equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    userAtual = usuario;
-                    return usuario.getUser_senha().equals(mPassword);
-                }
-            }
-
-            return false;*/
         }
 
         @Override
@@ -503,7 +484,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             //navega para a tela principal
-            if (success) {
+            if(erro_conexao == true){
+                Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
+                erro_conexao = false;
+            }
+
+            else if (success) {
                 mActivity.navegarPaginaPrincipal();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
@@ -525,4 +511,3 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mFacebookCallbackManager.onActivityResult(requestCode, resultCode, data);
     }
 }
-
