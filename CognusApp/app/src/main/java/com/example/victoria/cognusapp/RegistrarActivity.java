@@ -12,6 +12,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import classes.Topico;
+import classes.TopicoList;
+import classes.TopicoService;
 import classes.UsuarioService;
 import classes.Usuario;
 import retrofit2.Call;
@@ -21,20 +24,22 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RegistrarActivity extends AppCompatActivity implements android.widget.SearchView.OnQueryTextListener {
-    ArrayList<String> topicos;
+    TopicoList topicos;
     Usuario usuarioAtual;
     AdapterTopicos adapterTopicos;
     android.widget.SearchView mSearchView;
     ListView listTopicos;
     UsuarioService usuarioService;
+    TopicoService topicoService;
+    boolean ok = false;
 
-    protected void criarTopicos() {
+    /*protected void criarTopicos() {
         topicos = new ArrayList<String>();
         topicos.add("Matemática");
         topicos.add("Música");
         topicos.add("Ciência");
         topicos.add("Tecnologia");
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +48,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
 
         Intent intent = getIntent();
         usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+        topicos = new TopicoList();
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.ip_requisicao))
@@ -50,13 +56,10 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
                 .build();
 
         usuarioService = retrofit.create(UsuarioService.class);
+        topicoService = retrofit.create(TopicoService.class);
 
         listTopicos = (ListView) findViewById(R.id.listTopicos);
-        criarTopicos();
-        adapterTopicos = new AdapterTopicos(topicos, this);
-        listTopicos.setAdapter(adapterTopicos);
-
-        listTopicos.setTextFilterEnabled(false);
+        obterTopicos();
 
         mSearchView=(android.widget.SearchView) findViewById(R.id.buscar_topicos);
 
@@ -75,29 +78,38 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
 
             //getTopicosdeInteresse.
 
-            List<String> topicosSelecionados= adapterTopicos.getTopicosSelecionados();
-            Toast.makeText(getApplicationContext(), topicosSelecionados.get(0),
+            List<Topico> topicosSelecionados= adapterTopicos.getTopicosSelecionados();
+            Toast.makeText(getApplicationContext(), topicosSelecionados.get(0).getdescricao_topico(),
                     Toast.LENGTH_SHORT).show();
 
-            //proxima pagina
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("usuario", usuarioAtual);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+            usuarioAtual.setListTopicos(topicosSelecionados);
+            //System.out.println(topicosSelecionados);
+
+            registrarUsuario(usuarioAtual);
         }
     }
 
-    private void registrarUsuario(Usuario usuarioAtual) {
-        System.out.println("Requisicao");
-        //System.out.println(usuarioAtual.getUser_name() + " " + usuarioAtual.getUser_email());
+    private boolean registrarUsuario(final Usuario usuarioAtual) {
+        System.out.println("Cadastro Usuario");
+
         Call<Usuario> chamada1 = usuarioService.cadastrarUsuario(usuarioAtual);
         chamada1.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                Usuario user = response.body();
-                Toast.makeText(getApplicationContext(), user.getUser_name() + " " + user.getUser_id(),
-                        Toast.LENGTH_SHORT).show();
-                System.out.println("Resposta: " + user.getUser_email());
+                try {
+                    Usuario user = response.body();
+                    System.out.println(user.toString());
+                    //proxima pagina
+                    Intent intent = new Intent(RegistrarActivity.this, MainActivity.class);
+                    //tem que ser o user que o maroo manda
+                    intent.putExtra("usuario", user);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                catch (Exception e) {
+                    Log.i("Erro", e.getMessage());
+                }
+
             }
 
             @Override
@@ -105,6 +117,30 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
                 Log.i("Erro", t.getMessage());
                 Toast.makeText(getApplicationContext(), "Falha na conexão",
                         Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return ok;
+    }
+
+    private void obterTopicos() {
+        System.out.println("Obtendo tópicos");
+        Call<TopicoList> chamada = topicoService.listarTopicos();
+        chamada.enqueue(new Callback<TopicoList>() {
+            @Override
+            public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
+                System.out.println("sucesso");
+                System.out.println(response.body());
+                topicos = response.body();
+                adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
+                listTopicos.setAdapter(adapterTopicos);
+
+                listTopicos.setTextFilterEnabled(false);
+            }
+
+            @Override
+            public void onFailure(Call<TopicoList> call, Throwable t) {
+
             }
         });
     }

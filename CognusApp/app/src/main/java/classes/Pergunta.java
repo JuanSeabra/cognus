@@ -1,5 +1,7 @@
 package classes;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,9 +9,13 @@ import java.io.Serializable;
  */
 
 public class Pergunta implements Serializable{
+    @SerializedName("perg_id")
     private int perg_id;
+    @SerializedName("texto_perg")
     private String texto_perg;
+    @SerializedName("descricao")
     private String descricao;
+    @SerializedName("user_id")
     private Usuario user_id;
 
     public Pergunta(String texto_perg, String descricao, Usuario user_id) {

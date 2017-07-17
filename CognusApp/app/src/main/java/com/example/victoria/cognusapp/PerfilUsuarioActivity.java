@@ -28,6 +28,8 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
 
+        /*
+
         criarTopicos();
 
         listTopicos = (ListView) findViewById(R.id.lista_topicos);
@@ -41,6 +43,6 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
                 intent1.putExtra("topico",topicoSelecionado);
                 startActivity(intent1);
             }
-        });
+        });*/
     }
 }

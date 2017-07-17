@@ -1,6 +1,8 @@
 package classes;
 
 import java.io.Serializable;
+import java.util.List;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -18,10 +20,12 @@ public class Usuario implements Serializable {
     private String user_senha;
     @SerializedName("user_numseguidores")
     private int user_numseguidores;
+    private List<Topico> listTopicos;
 
     public Usuario(String user_name, String user_email, String user_senha, int user_id) {
 
         this.user_name = user_name;
+
         this.user_email = user_email;
         this.user_senha = user_senha;
         this.user_id = user_id;
@@ -30,6 +34,14 @@ public class Usuario implements Serializable {
     public Usuario(String user_email, String user_senha) {
         this.user_email = user_email;
         this.user_senha = user_senha;
+    }
+
+    public List<Topico> getListTopicos() {
+        return listTopicos;
+    }
+
+    public void setListTopicos(List<Topico> listTopicos) {
+        this.listTopicos = listTopicos;
     }
 
     public Usuario(String user_name, String user_email, String user_senha) {
@@ -85,5 +97,12 @@ public class Usuario implements Serializable {
 
     public void setUser_numseguidores(int user_numseguidores) {
         this.user_numseguidores = user_numseguidores;
+    }
+
+    public String toString() {
+        return  "ID: " + this.user_id + "\n" +
+                "Nome: " + this.user_name + "\n" +
+                "Email:" + this.user_email + "\n" +
+                        "Senha: " + this.user_senha;
     }
 }

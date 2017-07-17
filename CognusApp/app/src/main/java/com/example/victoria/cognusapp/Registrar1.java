@@ -95,8 +95,7 @@ public class Registrar1 extends AppCompatActivity {
                     if(userAtual != null){
                         Toast.makeText(getApplicationContext(), "Endereço de e-mail já existe.", Toast.LENGTH_SHORT).show();
                     }
-
-                    else if(userAtual == null){
+                    else {
                         userAtual = new Usuario(email, senha);
                         //pode navegar para a proxima tela
                         Intent intent = new Intent(getBaseContext(), RegistrarActivity.class);

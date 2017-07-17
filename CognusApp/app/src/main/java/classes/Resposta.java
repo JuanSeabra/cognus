@@ -1,14 +1,21 @@
 package classes;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * Created by waldomiro on 20/06/17.
  */
 
 public class Resposta {
+    @SerializedName("texto_resp")
     private String texto_resp;
+    @SerializedName("num_votos_positivos")
     private int num_votos_positivos;
+    @SerializedName("num_votos_negativos")
     private int num_votos_negativos;
+    @SerializedName("resp_id")
     private int resp_id;
+    @SerializedName("user_id")
     private Usuario user_id;
 
     public Usuario getuser_id() {
