@@ -10,7 +10,9 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import classes.Topico;
 
@@ -23,12 +25,17 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
     private List<Topico> topicos;
     private final Activity act;
     public List<Topico> orig;
+    public Map<String,Integer> dic_item_pos;
     public boolean[] itemChecked;
 
     public AdapterTopicos(List<Topico> topicos, Activity act) {
         this.topicos = topicos;
         this.act = act;
         this.itemChecked = new boolean[topicos.size()];
+        this.dic_item_pos = new HashMap<String, Integer>();
+        for(int i = 0; i < topicos.size(); i++){
+            dic_item_pos.put(topicos.get(i).getdescricao_topico(), i);
+        }
     }
 
     @Override
@@ -51,14 +58,15 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
         View view = act.getLayoutInflater()
                 .inflate(R.layout.activity_layout_lista_topicos_checkbox, parent, false);
         Topico topico = topicos.get(position);
+        final Integer posicao;
 
         TextView lblTopico = (TextView) view.findViewById(R.id.lblTopico);
         final CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
 
         checkBox.setChecked(false);
         lblTopico.setText(topico.getdescricao_topico());
-
-        if(itemChecked[position]){
+        posicao = dic_item_pos.get(topico.getdescricao_topico());
+        if(itemChecked[posicao]){
             checkBox.setChecked(true);
         }else{
             checkBox.setChecked(false);
@@ -68,9 +76,9 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
             @Override
             public void onClick(View v) {
                 if(checkBox.isChecked()){
-                    itemChecked[position] = true;
+                    itemChecked[posicao] = true;
                 }else{
-                    itemChecked[position] = false;
+                    itemChecked[posicao] = false;
                 }
             }
         });
@@ -84,7 +92,7 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 final FilterResults oReturn = new FilterResults();
-                final ArrayList<String> results = new ArrayList<String>();
+                final ArrayList<Topico> results = new ArrayList<Topico>();
 
                 if (orig == null)
                     orig = topicos;
@@ -93,7 +101,7 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
                         for (final Topico g : orig) {
                             if (g.getdescricao_topico().toLowerCase()
                                     .contains(constraint.toString().toLowerCase()))
-                                results.add(g.getdescricao_topico());
+                                results.add(g);
                         }
                     }
                     oReturn.values = results;
