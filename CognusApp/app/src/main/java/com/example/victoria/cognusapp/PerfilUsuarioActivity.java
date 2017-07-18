@@ -9,8 +9,10 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class PerfilUsuarioActivity extends AppCompatActivity {
+import classes.Usuario;
 
+public class PerfilUsuarioActivity extends AppCompatActivity {
+    Usuario userAtual;
     ArrayList<String> topicos;
     AdapterTopicos adapterTopicos;
     ListView listTopicos;
@@ -27,6 +29,9 @@ public class PerfilUsuarioActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_perfil_usuario);
+
+        Intent intent = getIntent();
+        userAtual = intent.getParcelableExtra("usuario");
 
         /*
 

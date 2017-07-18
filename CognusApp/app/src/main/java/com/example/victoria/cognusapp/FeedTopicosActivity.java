@@ -16,6 +16,7 @@ import classes.Resposta;
 import classes.Usuario;
 
 public class FeedTopicosActivity extends AppCompatActivity {
+    Usuario userAtual;
     private List<Usuario> usuarios;
     private List<Pergunta> perguntas = new ArrayList<>();
     private List<Resposta> respostas = new ArrayList<>();
@@ -59,6 +60,8 @@ public class FeedTopicosActivity extends AppCompatActivity {
         //pegar usuario
         Intent intent = getIntent();
         String topico = intent.getStringExtra("topico");
+        userAtual = intent.getParcelableExtra("usuario");
+
         TextView lblTopico = (TextView) findViewById(R.id.topico);
         lblTopico.setText(topico);
 

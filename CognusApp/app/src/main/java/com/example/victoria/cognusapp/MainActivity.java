@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         //pegar usuario
         Intent intent = getIntent();
-        usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+        usuarioAtual = intent.getParcelableExtra("usuario");
         System.out.println(usuarioAtual.toString());
 
         criarPerguntas();

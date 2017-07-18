@@ -11,6 +11,7 @@ import java.util.ArrayList;
 
 import classes.Pergunta;
 import classes.Topico;
+import classes.Usuario;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -18,6 +19,7 @@ public class ListaTopicosActivity extends AppCompatActivity {
     ArrayList<Topico> topicos;
     AdapterTopicos adapterTopicos;
     ListView listTopicos;
+    Usuario userAtual;
 
     /*
     protected void criarTopicos() {
@@ -37,6 +39,9 @@ public class ListaTopicosActivity extends AppCompatActivity {
                 .baseUrl(getString(R.string.ip_requisicao))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
+        Intent intent = getIntent();
+        userAtual = intent.getParcelableExtra("usuario");
 
         listTopicos = (ListView) findViewById(R.id.lista_topicos);
         adapterTopicos = new AdapterTopicos(topicos, this);

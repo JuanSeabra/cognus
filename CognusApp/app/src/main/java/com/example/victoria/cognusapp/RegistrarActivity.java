@@ -47,7 +47,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         setContentView(R.layout.activity_registrar);
 
         Intent intent = getIntent();
-        usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+        usuarioAtual = intent.getParcelableExtra("usuario");
         topicos = new TopicoList();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -81,46 +81,40 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
             List<Topico> topicosSelecionados= adapterTopicos.getTopicosSelecionados();
             Toast.makeText(getApplicationContext(), topicosSelecionados.get(0).getdescricao_topico(),
                     Toast.LENGTH_SHORT).show();
-
             usuarioAtual.setListTopicos(topicosSelecionados);
-            //System.out.println(topicosSelecionados);
 
             registrarUsuario(usuarioAtual);
         }
     }
 
-    private boolean registrarUsuario(final Usuario usuarioAtual) {
+    private void registrarUsuario(final Usuario usuarioAtual) {
         System.out.println("Cadastro Usuario");
 
         Call<Usuario> chamada1 = usuarioService.cadastrarUsuario(usuarioAtual);
         chamada1.enqueue(new Callback<Usuario>() {
-            @Override
+
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-                try {
+               // try {
                     Usuario user = response.body();
-                    System.out.println(user.toString());
                     //proxima pagina
                     Intent intent = new Intent(RegistrarActivity.this, MainActivity.class);
                     //tem que ser o user que o maroo manda
                     intent.putExtra("usuario", user);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                }
-                catch (Exception e) {
+                //}
+                /*catch (Exception e) {
                     Log.i("Erro", e.getMessage());
-                }
+                }*/
 
             }
 
-            @Override
             public void onFailure(Call<Usuario> call, Throwable t) {
                 Log.i("Erro", t.getMessage());
                 Toast.makeText(getApplicationContext(), "Falha na conexão",
                         Toast.LENGTH_SHORT).show();
             }
         });
-
-        return ok;
     }
 
     private void obterTopicos() {
@@ -129,8 +123,6 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         chamada.enqueue(new Callback<TopicoList>() {
             @Override
             public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
-                System.out.println("sucesso");
-                System.out.println(response.body());
                 topicos = response.body();
                 adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
                 listTopicos.setAdapter(adapterTopicos);

@@ -116,7 +116,6 @@ public class AdapterTopicos extends BaseAdapter implements Filterable {
 
         for(int i = 0; i < itemChecked.length; i++){
             if(itemChecked[i] == true){
-                System.out.println(getItem(i).getdescricao_topico());
                 Topico topico = getItem(i);
                 lista_topicos.add(topico);
             }

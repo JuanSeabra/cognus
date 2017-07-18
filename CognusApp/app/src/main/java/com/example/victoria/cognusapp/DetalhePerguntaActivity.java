@@ -19,6 +19,7 @@ import classes.Usuario;
 public class DetalhePerguntaActivity extends AppCompatActivity {
     private List<Resposta> respostas = new ArrayList<>();
     Pergunta pergSelecionada;
+    Usuario usuarioAtual;
 
     public void criarRespostas() {
         Usuario usuario = new Usuario("pudim","g@g", "dssdds");
@@ -36,7 +37,9 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhe__pergunta);
 
         Intent intent = getIntent();
-        pergSelecionada = (Pergunta) intent.getSerializableExtra("pergunta");
+
+        pergSelecionada = (Pergunta) intent.getParcelableExtra("pergunta");
+        usuarioAtual = (Usuario) intent.getParcelableExtra("usuario");
 
         TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
         txtPergunta.setText(pergSelecionada.gettexto_perg());
@@ -60,6 +63,7 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     public void responder(View view) {
         Intent intent = new Intent(this, ResponderPerguntaActivity.class);
         intent.putExtra("pergunta", pergSelecionada);
+        intent.putExtra("usuario", usuarioAtual);
         startActivity(intent);
     }
 }

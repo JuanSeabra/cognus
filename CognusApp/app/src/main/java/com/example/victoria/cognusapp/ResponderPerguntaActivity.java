@@ -7,8 +7,10 @@ import android.view.View;
 import android.widget.TextView;
 
 import classes.Pergunta;
+import classes.Usuario;
 
 public class ResponderPerguntaActivity extends AppCompatActivity {
+    Usuario userAtual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,7 +18,8 @@ public class ResponderPerguntaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_responder_pergunta);
 
         Intent intent = getIntent();
-        Pergunta pergunta = (Pergunta) intent.getSerializableExtra("pergunta");
+        Pergunta pergunta = intent.getParcelableExtra("pergunta");
+        userAtual = intent.getParcelableExtra("usuario");
 
         TextView txtPerg = (TextView) findViewById(R.id.txtPerguntaDesc);
         txtPerg.setText(pergunta.gettexto_perg());

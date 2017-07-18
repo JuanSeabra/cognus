@@ -34,7 +34,7 @@ public class FazerPerguntaActivity extends AppCompatActivity {
         perguntaService = retrofit.create(PerguntaService.class);
 
         Intent intent = getIntent();
-        usuarioAtual = (Usuario) intent.getSerializableExtra("usuario");
+        usuarioAtual = intent.getParcelableExtra("usuario");
     }
 
     public void fazerPergunta(View view) {

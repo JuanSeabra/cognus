@@ -1,5 +1,8 @@
 package classes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -8,7 +11,7 @@ import java.io.Serializable;
  * Created by victoria on 19/06/17.
  */
 
-public class Pergunta implements Serializable{
+public class Pergunta implements Parcelable {
     @SerializedName("perg_id")
     private int perg_id;
     @SerializedName("texto_perg")
@@ -36,6 +39,25 @@ public class Pergunta implements Serializable{
         this.texto_perg = texto_perg;
         this.descricao = descricao;
     }
+
+    protected Pergunta(Parcel in) {
+        perg_id = in.readInt();
+        texto_perg = in.readString();
+        descricao = in.readString();
+        user_id = in.readParcelable(Usuario.class.getClassLoader());
+    }
+
+    public static final Creator<Pergunta> CREATOR = new Creator<Pergunta>() {
+        @Override
+        public Pergunta createFromParcel(Parcel in) {
+            return new Pergunta(in);
+        }
+
+        @Override
+        public Pergunta[] newArray(int size) {
+            return new Pergunta[size];
+        }
+    };
 
     public int getperg_id() {
         return perg_id;
@@ -67,5 +89,18 @@ public class Pergunta implements Serializable{
 
     public void setuser_id(Usuario user_id) {
         this.user_id = user_id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(perg_id);
+        dest.writeString(texto_perg);
+        dest.writeString(descricao);
+        dest.writeParcelable(user_id, flags);
     }
 }
