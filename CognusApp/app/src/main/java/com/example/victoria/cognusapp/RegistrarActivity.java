@@ -111,7 +111,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
 
             public void onFailure(Call<Usuario> call, Throwable t) {
                 Log.i("Erro", t.getMessage());
-                Toast.makeText(getApplicationContext(), "Falha na conexão",
+                Toast.makeText(getApplicationContext(), "Erro",
                         Toast.LENGTH_SHORT).show();
             }
         });

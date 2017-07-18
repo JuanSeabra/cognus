@@ -25,6 +25,8 @@ public interface UsuarioService {
     Call<Usuario> buscarUsuario(@Body String id);
     @POST("usuarios/consultarUsuarioEmail")
     Call<Usuario> buscarUsuarioEmail(@Body String email);
+
+    @Headers("Content-type: application/json")
     @POST("usuarios/autenticarUsuario")
-    Call<Usuario> autenticarUsuario(@Body Usuario usuario);
+    Call<Usuario> autenticarUsuario(@Body Usuario user);
 }
