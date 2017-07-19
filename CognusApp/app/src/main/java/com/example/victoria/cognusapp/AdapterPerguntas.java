@@ -29,6 +29,7 @@ public class AdapterPerguntas extends BaseAdapter {
     //private final List<Usuario> usuarios;
     private final Activity act;
     private UsuarioService usuarioService;
+    TextView lblNomeUsuario;
 
     public AdapterPerguntas(List<Pergunta> perguntas, Activity act) {
         this.perguntas = perguntas;
@@ -66,7 +67,7 @@ public class AdapterPerguntas extends BaseAdapter {
 
         TextView lblTags = (TextView) view.findViewById(R.id.tags);
         TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
-        TextView lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
+        lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
         TextView lblTextoPergunta = (TextView) view.findViewById(R.id.textoPergunta);
 
         String tags = "Tag1 Tag2 Tag3";
@@ -74,28 +75,21 @@ public class AdapterPerguntas extends BaseAdapter {
         lblPergunta.setText(pergunta.getDescricao());
         lblTextoPergunta.setText(pergunta.gettexto_perg());
 
-        /*for (Usuario user : usuarios) {
-            if (user.getUser_id() == pergunta.getperg_id()) {
-                lblNomeUsuario.setText(user.getUser_name());
-                break;
-            }
-        }*/
-        buscarUsuario(Integer.toString(pergunta.getuser_id().getUser_id()));
-        /*if(user != null)
-            lblNomeUsuario.setText(user.getUser_name());*/
 
+        buscarUsuario(pergunta.getuser_id().getUser_id());
 
         return view;
     }
 
-    public void buscarUsuario(String id) {
+    public void buscarUsuario(long id) {
         Call<Usuario> chamada = usuarioService.consultarUsuario(id);
-        Usuario user;
+
         chamada.enqueue(new Callback<Usuario>() {
             @Override
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
                 Usuario user1 = response.body();
                 System.out.println(user1.getUser_name());
+                lblNomeUsuario.setText(user1.getUser_name());
             }
 
             @Override

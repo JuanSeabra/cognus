@@ -23,7 +23,7 @@ public interface UsuarioService {
     @POST("usuarios/cadastrarUsuario")
     Call<Usuario> cadastrarUsuario(@Body Usuario user);
     @POST("usuarios/consultarUsuario")
-    Call<Usuario> consultarUsuario(@Body String id);
+    Call<Usuario> consultarUsuario(@Body long id);
     @POST("usuarios/consultarUsuarioEmail")
     Call<Usuario> buscarUsuarioEmail(@Body String email);
     @GET("usuarios/listarUsuarios")
