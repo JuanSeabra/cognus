@@ -22,4 +22,7 @@ public interface TopicoService {
     @Headers("Content-type: application/json")
     @GET("topicos/listarTopicos")
     Call<TopicoList> listarTopicos();
+
+    @POST("topicos/listarTopicoPergunta")
+    Call<TopicoList> listarTopicoPergunta(@Body long id);
 }

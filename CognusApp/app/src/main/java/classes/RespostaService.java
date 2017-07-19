@@ -21,5 +21,5 @@ public interface RespostaService {
     @GET("respostas/listarRespostas")
     Call<Resposta> listarRespostas();
     @POST("respostas/listarRespostaPergunta")
-    Call<RespostaList> listarRespostasPergunta(@Body String id);
+    Call<RespostaList> listarRespostasPergunta(@Body long id);
 }

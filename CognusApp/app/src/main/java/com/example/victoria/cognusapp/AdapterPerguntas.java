@@ -12,6 +12,9 @@ import java.util.List;
 
 import classes.Pergunta;
 import classes.Resposta;
+import classes.Topico;
+import classes.TopicoList;
+import classes.TopicoService;
 import classes.Usuario;
 import classes.UsuarioService;
 import retrofit2.Call;
@@ -29,7 +32,9 @@ public class AdapterPerguntas extends BaseAdapter {
     //private final List<Usuario> usuarios;
     private final Activity act;
     private UsuarioService usuarioService;
+    private TopicoService topicoService;
     TextView lblNomeUsuario;
+    TextView lblTags;
 
     public AdapterPerguntas(List<Pergunta> perguntas, Activity act) {
         this.perguntas = perguntas;
@@ -42,6 +47,7 @@ public class AdapterPerguntas extends BaseAdapter {
                 .build();
 
         usuarioService = retrofit.create(UsuarioService.class);
+        topicoService = retrofit.create(TopicoService.class);
     }
 
     @Override
@@ -65,17 +71,17 @@ public class AdapterPerguntas extends BaseAdapter {
                 .inflate(R.layout.activity_layout_pergunta, parent, false);
         Pergunta pergunta = perguntas.get(position);
 
-        TextView lblTags = (TextView) view.findViewById(R.id.tags);
+        lblTags = (TextView) view.findViewById(R.id.tags);
         TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
         lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
         TextView lblTextoPergunta = (TextView) view.findViewById(R.id.textoPergunta);
 
-        String tags = "Tag1 Tag2 Tag3";
-        lblTags.setText(tags);
+        /*String tags = "Tag1 Tag2 Tag3";
+        lblTags.setText(tags);*/
         lblPergunta.setText(pergunta.getDescricao());
         lblTextoPergunta.setText(pergunta.gettexto_perg());
 
-
+        buscarTopicosPergunta(pergunta.getperg_id());
         buscarUsuario(pergunta.getuser_id().getUser_id());
 
         return view;
@@ -97,7 +103,42 @@ public class AdapterPerguntas extends BaseAdapter {
                 Log.i("Erro",t.getMessage());
             }
         });
+    }
 
+    public void buscarTopicosPergunta(long id) {
+        Call<TopicoList> chamada = topicoService.listarTopicoPergunta(id);
+        chamada.enqueue(new Callback<TopicoList>() {
+            @Override
+            public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
+                TopicoList topicoList = response.body();
+                if (topicoList != null) {
+                    List<Topico> topicos = topicoList.getListaTopicos();
+                    if (topicos.size() == 2) {
+                        Topico t = topicos.get(0);
+                        Topico t2 = topicos.get(1);
+                        if (t.gettopico_id() == t2.gettopico_id()) {
+                            topicos.remove(t2);
+                        }
+                        topicoList.setListaTopicos(topicos);
+                    }
 
+                    String txtTopicos = "";
+                    for (Topico t: topicoList.getListaTopicos() ) {
+                        txtTopicos += (t.getdescricao_topico() + " ");
+                    }
+
+                    lblTags.setText(txtTopicos);
+                }
+                else {
+                    lblTags.setText("Sem tags");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TopicoList> call, Throwable t) {
+
+            }
+        });
     }
 }

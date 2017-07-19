@@ -43,7 +43,7 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     }*/
 
     public void obterRespostas() {
-        Call<RespostaList> chamada = respostaService.listarRespostasPergunta(Integer.toString(pergSelecionada.getperg_id()));
+        Call<RespostaList> chamada = respostaService.listarRespostasPergunta(pergSelecionada.getperg_id());
         chamada.enqueue(new Callback<RespostaList>() {
             @Override
             public void onResponse(Call<RespostaList> call, Response<RespostaList> response) {
@@ -86,9 +86,14 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         //criarRespostas();
         obterRespostas();
         TextView lblNumResp = (TextView) findViewById(R.id.numero_respostas);
-        lblNumResp.setText(respostas.size() + " resposta(s)");
+        if (respostas != null)
+            lblNumResp.setText(respostas.size() + " resposta(s)");
+        else {
+            respostas = new ArrayList<>();
+            lblNumResp.setText("0 respostas");
+        }
 
-        AdapterRespostas adapterRespostas = new AdapterRespostas((List<Resposta>) respostas, this);
+        AdapterRespostas adapterRespostas = new AdapterRespostas(respostas, this);
         lstRespostas.setAdapter(adapterRespostas);
     }
 
