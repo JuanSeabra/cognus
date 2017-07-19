@@ -96,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private CallbackManager mFacebookCallbackManager;
     private LoginButton mFacebookSignInButton;
+    private String emailFacebook;
 
 
     @Override
@@ -168,7 +169,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
                                         // Application code
                                         try {
-                                            String email = object.getString("email");
+                                            emailFacebook = object.getString("email");
                                             //System.out.println(email);
                                             //navegar para a proxima tela
                                             handleSignInResult(new Callable<Void>() {
@@ -177,7 +178,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                                                     LoginManager.getInstance().logOut();
                                                     return null;
                                                 }
-                                            }, email);
+                                            }, emailFacebook);
                                         } catch (JSONException e) {
                                             e.printStackTrace();
                                         }
@@ -225,12 +226,32 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             /* Login error */
             Toast.makeText(getApplicationContext(), "Erro de login", Toast.LENGTH_SHORT).show();
         } else {
-            /* Login success */
-            //Application.getInstance().setLogoutCallable(logout);
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
+
+            //verificar se ja esta no banco
+            userAtual = autenticarFacebook(email);
+            if (userAtual != null) {
+                navegarPaginaPrincipal();
+            }
+            else {
+                Usuario user = new Usuario(email, "a");
+                Intent intent = new Intent(this, RegistrarActivity.class);
+                intent.putExtra("face", true);
+                intent.putExtra("usuario", user);
+                startActivity(intent);
+            }
         }
+    }
+
+    public Usuario autenticarFacebook(String email) {
+        Usuario user = new Usuario(email, "a");
+        Call<Usuario> chamada = usuarioService.autenticarUsuario(user);
+        try {
+            Usuario retorno = chamada.execute().body();
+            return retorno;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -419,6 +440,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     public void navegarPaginaPrincipal() {
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra("usuario", userAtual);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
 

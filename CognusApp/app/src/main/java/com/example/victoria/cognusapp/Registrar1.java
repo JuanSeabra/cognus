@@ -100,7 +100,7 @@ public class Registrar1 extends AppCompatActivity {
                         //pode navegar para a proxima tela
                         Intent intent = new Intent(getBaseContext(), RegistrarActivity.class);
                         intent.putExtra("usuario", userAtual);
-                        //intent.putExtra("senha", senha);
+                        intent.putExtra("face", false);
                         startActivity(intent);
                     }
                 }
