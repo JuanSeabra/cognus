@@ -82,7 +82,8 @@
                 android:onClick="onClick"
                 android:text="@string/action_forget_password"
                 android:textColor="@color/colorPrimary"
-                android:textSize="32px" />
+                android:textSize="32px"
+                android:visibility="invisible" />
 
             <Button
                 android:id="@+id/email_sign_in_button"

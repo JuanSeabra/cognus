@@ -72,8 +72,6 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
             //getTopicosdeInteresse.
 
             List<Topico> topicosSelecionados= adapterTopicos.getTopicosSelecionados();
-            Toast.makeText(getApplicationContext(), topicosSelecionados.get(0).getdescricao_topico(),
-                    Toast.LENGTH_SHORT).show();
             usuarioAtual.setListTopicos(topicosSelecionados);
 
             registrarUsuario(usuarioAtual);

@@ -137,11 +137,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_perfil) {
             // Handle the camera action
             Intent intent = new Intent(this, PerfilUsuarioActivity.class);
+            intent.putExtra("usuario", usuarioAtual);
             startActivity(intent);
         } else if (id == R.id.nav_feed) {
-
+            //intent.putExtra("usuario", usuarioAtual);
         } else if (id == R.id.nav_topicos) {
             Intent intent = new Intent(this, ListaTopicosActivity.class);
+            intent.putExtra("usuario", usuarioAtual);
             startActivity(intent);
         } else if (id == R.id.logout) {
             //implementar o logout
