@@ -193,11 +193,16 @@ public class MainActivity extends AppCompatActivity
 
     public void obterPerguntas() {
         System.out.println("Obtendo perguntas");
+
         Call<PerguntaList> chamada = perguntaService.listarPerguntas();
         chamada.enqueue(new Callback<PerguntaList>() {
             @Override
             public void onResponse(Call<PerguntaList> call, Response<PerguntaList> response) {
                 PerguntaList perguntaList = response.body();
+
+                if (perguntaList == null)
+                    perguntaList = new PerguntaList();
+
                 adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), respostas, usuarios, MainActivity.this);
 
                 lstPerguntas.setAdapter(adapterPerguntas);
@@ -212,7 +217,6 @@ public class MainActivity extends AppCompatActivity
                         startActivity(intent1);
                     }
                 });
-
             }
 
             @Override

@@ -142,18 +142,15 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         chamada.enqueue(new Callback<TopicoList>() {
             @Override
             public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
-                try {
-                    topicos = response.body();
-                }
-                catch(Exception e) {
-                    topicos = new TopicoList();
-                }
-                finally {
-                    adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
-                    listTopicos.setAdapter(adapterTopicos);
+                topicos = response.body();
 
-                    listTopicos.setTextFilterEnabled(false);
-                }
+                if (topicos == null)
+                    topicos = new TopicoList();
+
+                adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
+                listTopicos.setAdapter(adapterTopicos);
+
+                listTopicos.setTextFilterEnabled(false);
             }
 
             @Override
