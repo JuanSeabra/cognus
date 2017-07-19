@@ -32,16 +32,6 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     Usuario usuarioAtual;
     RespostaService respostaService;
 
-    /*public void criarRespostas() {
-        Usuario usuario = new Usuario("pudim","g@g", "dssdds");
-        Resposta r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuario,1);
-        Resposta r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuario,2);
-        Resposta r22 = new Resposta("A cor mais bonita é azul", 2,1,usuario,2);
-        respostas.add(r11);
-        respostas.add(r21);
-        respostas.add(r22);
-    }*/
-
     public void obterRespostas() {
         Call<RespostaList> chamada = respostaService.listarRespostasPergunta(pergSelecionada.getperg_id());
         chamada.enqueue(new Callback<RespostaList>() {
@@ -49,9 +39,11 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
             public void onResponse(Call<RespostaList> call, Response<RespostaList> response) {
                 RespostaList r = response.body();
                 if (r != null) {
+                    System.out.println("Teve respostas");
                     respostas = r.getListRespostas();
                 }
                 else {
+                    System.out.println("Não teve respostas");
                     respostas = new ArrayList<Resposta>();
                 }
             }
@@ -69,8 +61,10 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_detalhe__pergunta);
 
         Intent intent = getIntent();
+        usuarioAtual = intent.getParcelableExtra("usuario");
 
         pergSelecionada = intent.getParcelableExtra("pergunta");
+        System.out.println(pergSelecionada.getperg_id());
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.ip_requisicao))
                 .addConverterFactory(GsonConverterFactory.create())

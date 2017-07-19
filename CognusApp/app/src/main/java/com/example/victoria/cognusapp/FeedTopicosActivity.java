@@ -34,7 +34,7 @@ public class FeedTopicosActivity extends AppCompatActivity {
         perguntas.add(p2);
     }
 
-    public void criarRespostas() {
+   /* public void criarRespostas() {
         Usuario usuario = new Usuario("pudim","g@g", "dssdds");
         r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuario,1);
         r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuario,2);
@@ -42,7 +42,7 @@ public class FeedTopicosActivity extends AppCompatActivity {
         respostas.add(r11);
         respostas.add(r21);
         respostas.add(r22);
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class FeedTopicosActivity extends AppCompatActivity {
         lblTopico.setText(topico);
 
         criarPerguntas();
-        criarRespostas();
+        //criarRespostas();
         //fazer a parte do list view
         ListView lstPerguntas = (ListView) findViewById(R.id.perguntou);
         AdapterPerguntas adapterPerguntas = new AdapterPerguntas(perguntas, this);

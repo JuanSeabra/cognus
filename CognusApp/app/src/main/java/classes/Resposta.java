@@ -16,41 +16,42 @@ public class Resposta {
     @SerializedName("resp_id")
     private int resp_id;
     @SerializedName("user_id")
-    private Usuario user_id;
+    private int user_id;
+    @SerializedName("perg_id")
+    private int perg_id;
 
-    public Usuario getuser_id() {
+    public int getuser_id() {
         return user_id;
     }
 
-    public void setuser_id(Usuario user_id) {
+    public void setuser_id(int user_id) {
         this.user_id = user_id;
     }
 
     public int getPergunta() {
-        return pergunta;
+        return perg_id;
     }
 
     public void setPergunta(int pergunta) {
-        this.pergunta = pergunta;
+        this.perg_id = pergunta;
     }
 
-    private int pergunta;
 
-    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int resp_id, Usuario user_id, int pergunta) {
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int resp_id, int user_id, int pergunta) {
         this.texto_resp = texto_resp;
         this.num_votos_positivos = num_votos_positivos;
         this.num_votos_negativos = num_votos_negativos;
         this.resp_id = resp_id;
         this.user_id = user_id;
-        this.pergunta = pergunta;
+        this.perg_id = pergunta;
     }
 
-    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, Usuario user_id, int pergunta) {
+    public Resposta(String texto_resp, int num_votos_positivos, int num_votos_negativos, int user_id, int pergunta) {
         this.texto_resp = texto_resp;
         this.num_votos_positivos = num_votos_positivos;
         this.num_votos_negativos = num_votos_negativos;
         this.user_id = user_id;
-        this.pergunta = pergunta;
+        this.perg_id = pergunta;
     }
 
     public String gettexto_resp() {

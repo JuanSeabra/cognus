@@ -22,4 +22,6 @@ public interface RespostaService {
     Call<Resposta> listarRespostas();
     @POST("respostas/listarRespostaPergunta")
     Call<RespostaList> listarRespostasPergunta(@Body long id);
+    @POST("respostas/cadastrarResposta")
+    Call<Resposta> cadastrarResposta(@Body Resposta resposta);
 }

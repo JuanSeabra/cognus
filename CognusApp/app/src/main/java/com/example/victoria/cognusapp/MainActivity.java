@@ -1,6 +1,7 @@
 package com.example.victoria.cognusapp;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -83,7 +84,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //fazer a parte do list view
         lstPerguntas = (ListView) findViewById(R.id.lstPerguntasHome);
         //pegar aqui as perguntas
-        obterPerguntas();
+        perguntaList = new PerguntaList();
+        perguntaList.setListaPerguntas(new ArrayList<Pergunta>());
+        adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), MainActivity.this);
+
+        lstPerguntas.setAdapter(adapterPerguntas);
+
+        lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Pergunta pergSelecionada = (perguntaList.getListaPerguntas()).get(position);
+                Intent intent1 = new Intent(MainActivity.this, DetalhePerguntaActivity.class);
+                intent1.putExtra("usuario", usuarioAtual);
+                System.out.println(usuarioAtual);
+                intent1.putExtra("pergunta",pergSelecionada);
+                startActivity(intent1);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -93,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        obterPerguntas();
     }
 
 
@@ -171,7 +190,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    public void obterPerguntas() {
+    public boolean obterPerguntas() {
         System.out.println("Obtendo perguntas");
         Call<PerguntaList> chamada = perguntaService.listarPerguntas();
         chamada.enqueue(new Callback<PerguntaList>() {
@@ -179,32 +198,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onResponse(Call<PerguntaList> call, Response<PerguntaList> response) {
                 System.out.println("ON RESPONSE");
                 perguntaList = response.body();
-                List<Pergunta> perguntas = perguntaList.getListaPerguntas();
+                if (perguntaList != null) {
+                    List<Pergunta> perguntas = perguntaList.getListaPerguntas();
 
-                if (perguntas.size() == 2) {
-                    Pergunta p = perguntas.get(0);
-                    Pergunta p2 = perguntas.get(1);
+                    if (perguntas.size() == 2) {
+                        Pergunta p = perguntas.get(0);
+                        Pergunta p2 = perguntas.get(1);
 
-                    if (p.getperg_id() == p2.getperg_id()) {
-                        perguntas.remove(p2);
+                        if (p.getperg_id() == p2.getperg_id()) {
+                            perguntas.remove(p2);
+                        }
                     }
-                    perguntaList.setListaPerguntas(perguntas);
+                }
+                else {
+                    perguntaList = new PerguntaList();
+                    perguntaList.setListaPerguntas(new ArrayList<Pergunta>());
                 }
 
+
+                perguntaList.setListaPerguntas(perguntaList.getListaPerguntas());
                 adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), MainActivity.this);
 
                 lstPerguntas.setAdapter(adapterPerguntas);
-
-                lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Pergunta pergSelecionada = (perguntaList.getListaPerguntas()).get(position);
-                        Intent intent1 = new Intent(MainActivity.this, DetalhePerguntaActivity.class);
-                        intent1.putExtra("usuario", usuarioAtual);
-                        intent1.putExtra("pergunta",pergSelecionada);
-                        startActivity(intent1);
-                    }
-                });
             }
 
             @Override
@@ -212,25 +227,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Log.i("Erro", t.getMessage());
             }
         });
+        return true;
     }
-
-    /*public void obterUsuarios() {
-        System.out.println("Obtendo usuários");
-        Call<UserList> chamada = usuarioService.listarUsuarios();
-        chamada.enqueue(new Callback<UserList>() {
-            @Override
-            public void onResponse(Call<UserList> call, Response<UserList> response) {
-                System.out.println("Lista Usuarios");
-                userList = response.body();
-
-                if (userList == null)
-                    userList = new UserList();
-            }
-
-            @Override
-            public void onFailure(Call<UserList> call, Throwable t) {
-                Log.i("Erro", t.getMessage());
-            }
-        });
-    }*/
 }
