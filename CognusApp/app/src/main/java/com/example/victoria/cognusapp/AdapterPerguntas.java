@@ -1,6 +1,8 @@
 package com.example.victoria.cognusapp;
 
 import android.app.Activity;
+import android.content.res.Resources;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,6 +13,12 @@ import java.util.List;
 import classes.Pergunta;
 import classes.Resposta;
 import classes.Usuario;
+import classes.UsuarioService;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by victoria on 19/06/17.
@@ -18,15 +26,21 @@ import classes.Usuario;
 
 public class AdapterPerguntas extends BaseAdapter {
     private final List<Pergunta> perguntas;
-    private final List<Resposta> respostas;
-    private final List<Usuario> usuarios;
+    //private final List<Usuario> usuarios;
     private final Activity act;
+    private UsuarioService usuarioService;
 
-    public AdapterPerguntas(List<Pergunta> perguntas, List<Resposta> respostas, List<Usuario> usuarios, Activity act) {
+    public AdapterPerguntas(List<Pergunta> perguntas, Activity act) {
         this.perguntas = perguntas;
-        this.respostas = respostas;
-        this.usuarios = usuarios;
+        //this.usuarios = usuarios;
         this.act = act;
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(act.getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        usuarioService = retrofit.create(UsuarioService.class);
     }
 
     @Override
@@ -48,29 +62,48 @@ public class AdapterPerguntas extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater()
                 .inflate(R.layout.activity_layout_pergunta, parent, false);
-        Pergunta pergunta = perguntas.get(respostas.get(position).getPergunta()-1);
+        Pergunta pergunta = perguntas.get(position);
 
         TextView lblTags = (TextView) view.findViewById(R.id.tags);
         TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
         TextView lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
-        TextView lblResposta = (TextView) view.findViewById(R.id.resposta);
-        TextView lblNumResp = (TextView) view.findViewById(R.id.numero_respostas);
+        TextView lblTextoPergunta = (TextView) view.findViewById(R.id.textoPergunta);
 
         String tags = "Tag1 Tag2 Tag3";
         lblTags.setText(tags);
-        lblPergunta.setText(pergunta.gettexto_perg());
-        //System.out.println(usuarios.get(respostas.get(position).getuser_id()-1).getUser_name());
-        lblNomeUsuario.setText("testando");
-        lblResposta.setText(respostas.get(position).gettexto_resp());
+        lblPergunta.setText(pergunta.getDescricao());
+        lblTextoPergunta.setText(pergunta.gettexto_perg());
 
-        Integer cont = new Integer(0);
-        for (int i = 0; i < respostas.size(); i++) {
-            Resposta r = respostas.get(i);
-            if (r.getPergunta() == pergunta.getperg_id())
-                cont++;
-        }
-        lblNumResp.setText(cont.toString() + " resposta(s)");
+        /*for (Usuario user : usuarios) {
+            if (user.getUser_id() == pergunta.getperg_id()) {
+                lblNomeUsuario.setText(user.getUser_name());
+                break;
+            }
+        }*/
+        buscarUsuario(Integer.toString(pergunta.getuser_id().getUser_id()));
+        /*if(user != null)
+            lblNomeUsuario.setText(user.getUser_name());*/
+
 
         return view;
+    }
+
+    public void buscarUsuario(String id) {
+        Call<Usuario> chamada = usuarioService.consultarUsuario(id);
+        Usuario user;
+        chamada.enqueue(new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                Usuario user1 = response.body();
+                System.out.println(user1.getUser_name());
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.i("Erro",t.getMessage());
+            }
+        });
+
+
     }
 }

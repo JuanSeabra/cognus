@@ -6,6 +6,8 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by victoria on 19/06/17.
@@ -20,6 +22,17 @@ public class Pergunta implements Parcelable {
     private String descricao;
     @SerializedName("user_id")
     private Usuario user_id;
+
+    @SerializedName("listTopicos")
+    private List<Topico> listTopicos;
+
+    public List<Topico> getListTopicos() {
+        return listTopicos;
+    }
+
+    public void setListTopicos(List<Topico> listTopicos) {
+        this.listTopicos = listTopicos;
+    }
 
     public Pergunta(String texto_perg, String descricao, Usuario user_id) {
         this.perg_id = 0;

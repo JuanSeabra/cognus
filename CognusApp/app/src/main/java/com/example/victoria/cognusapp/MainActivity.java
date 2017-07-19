@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -28,44 +30,26 @@ import classes.Pergunta;
 import classes.PerguntaList;
 import classes.PerguntaService;
 import classes.Resposta;
+import classes.Topico;
+import classes.UserList;
 import classes.Usuario;
+import classes.UsuarioService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {Usuario usuarioAtual;
-    private List<Usuario> usuarios;
-    private List<Pergunta> perguntas = new ArrayList<>();
-    private List<Resposta> respostas = new ArrayList<>();
-    private Pergunta p1;
-    private Pergunta p2;
-    private Resposta r11;
-    private Resposta r21;
-    private Resposta r22;
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    Usuario usuarioAtual;
     private PerguntaService perguntaService;
+    private UsuarioService usuarioService;
     private AdapterPerguntas adapterPerguntas;
     private ListView lstPerguntas;
+    UserList userList;
+    PerguntaList perguntaList;
 
     private CallbackManager mFacebookCallbackManager;
-
-    public void criarPerguntas() {
-        p1 = new Pergunta("Qual a raiz de 1069?", "",1,usuarioAtual);
-        p2 = new Pergunta("Qual a cor mais bonita do mundo?", "",2,usuarioAtual);
-        perguntas.add(p1);
-        perguntas.add(p2);
-    }
-
-    public void criarRespostas() {
-        r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuarioAtual,1);
-        r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuarioAtual,2);
-        r22 = new Resposta("A cor mais bonita é azul", 2,1,usuarioAtual,2);
-        respostas.add(r11);
-        respostas.add(r21);
-        respostas.add(r22);
-    }
 
     public void fazerPergunta(View view) {
         Intent intent = new Intent(this, FazerPerguntaActivity.class);
@@ -80,28 +64,22 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        usuarios = new ArrayList<Usuario>();
-        Usuario user = new Usuario("Administrador","admin@teste.com","admin",1);
-        Usuario user2 = new Usuario("João","joao@teste.com","123",2);
-        Usuario user3 = new Usuario("Maria","maria@teste.com","123",3);
-        usuarios.add(user);
-        usuarios.add(user2);
-        usuarios.add(user3);
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(getString(R.string.ip_requisicao))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         perguntaService = retrofit.create(PerguntaService.class);
+        usuarioService = retrofit.create(UsuarioService.class);
+
+        //obter usuarios
+        //obterUsuarios();
 
         //pegar usuario
         Intent intent = getIntent();
         usuarioAtual = intent.getParcelableExtra("usuario");
         System.out.println(usuarioAtual.toString());
 
-        criarPerguntas();
-        criarRespostas();
         //fazer a parte do list view
         lstPerguntas = (ListView) findViewById(R.id.lstPerguntasHome);
         //pegar aqui as perguntas
@@ -197,28 +175,60 @@ public class MainActivity extends AppCompatActivity
         chamada.enqueue(new Callback<PerguntaList>() {
             @Override
             public void onResponse(Call<PerguntaList> call, Response<PerguntaList> response) {
-                PerguntaList perguntaList = response.body();
-                adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), respostas, usuarios, MainActivity.this);
+                System.out.println("ON RESPONSE");
+                perguntaList = response.body();
+                List<Pergunta> perguntas = perguntaList.getListaPerguntas();
+
+                if (perguntas.size() == 2) {
+                    Pergunta p = perguntas.get(0);
+                    Pergunta p2 = perguntas.get(1);
+
+                    if (p.getperg_id() == p2.getperg_id()) {
+                        perguntas.remove(p2);
+                    }
+                    perguntaList.setListaPerguntas(perguntas);
+                }
+
+                adapterPerguntas = new AdapterPerguntas(perguntaList.getListaPerguntas(), MainActivity.this);
 
                 lstPerguntas.setAdapter(adapterPerguntas);
 
                 lstPerguntas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Pergunta pergSelecionada = perguntas.get(position);
+                        Pergunta pergSelecionada = (perguntaList.getListaPerguntas()).get(position);
                         Intent intent1 = new Intent(MainActivity.this, DetalhePerguntaActivity.class);
                         intent1.putExtra("usuario", usuarioAtual);
                         intent1.putExtra("pergunta",pergSelecionada);
                         startActivity(intent1);
                     }
                 });
-
             }
 
             @Override
             public void onFailure(Call<PerguntaList> call, Throwable t) {
-
+                Log.i("Erro", t.getMessage());
             }
         });
     }
+
+    /*public void obterUsuarios() {
+        System.out.println("Obtendo usuários");
+        Call<UserList> chamada = usuarioService.listarUsuarios();
+        chamada.enqueue(new Callback<UserList>() {
+            @Override
+            public void onResponse(Call<UserList> call, Response<UserList> response) {
+                System.out.println("Lista Usuarios");
+                userList = response.body();
+
+                if (userList == null)
+                    userList = new UserList();
+            }
+
+            @Override
+            public void onFailure(Call<UserList> call, Throwable t) {
+                Log.i("Erro", t.getMessage());
+            }
+        });
+    }*/
 }

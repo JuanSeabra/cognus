@@ -9,7 +9,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import classes.Resposta;
-import classes.Usuario;
 
 /**
  * Created by victoria on 21/06/17.
@@ -49,7 +48,7 @@ public class AdapterRespostas extends BaseAdapter {
         Resposta resp = respostas.get(position);
 
         TextView lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
-        TextView lblResposta = (TextView) view.findViewById(R.id.resposta);
+        TextView lblResposta = (TextView) view.findViewById(R.id.textoPergunta);
 
         String tags = "Tag1 Tag2 Tag3";
         lblNomeUsuario.setText(usuarios[position]);

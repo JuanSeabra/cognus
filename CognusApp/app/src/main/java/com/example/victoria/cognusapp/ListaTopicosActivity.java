@@ -6,29 +6,28 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import classes.Pergunta;
 import classes.Topico;
+import classes.TopicoList;
+import classes.TopicoService;
 import classes.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ListaTopicosActivity extends AppCompatActivity {
-    ArrayList<Topico> topicos;
-    AdapterTopicos adapterTopicos;
+    TopicoList topicos;
+    AdapterTopicosUser adapterTopicos;
     ListView listTopicos;
     Usuario userAtual;
-
-    /*
-    protected void criarTopicos() {
-        topicos = new ArrayList<String>();
-        topicos.add("Matemática");
-        topicos.add("Música");
-        topicos.add("Ciência");
-        topicos.add("Tecnologia");
-    }*/
+    TopicoService topicoService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +42,26 @@ public class ListaTopicosActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userAtual = intent.getParcelableExtra("usuario");
 
+        topicoService = retrofit.create(TopicoService.class);
         listTopicos = (ListView) findViewById(R.id.lista_topicos);
-        adapterTopicos = new AdapterTopicos(topicos, this);
-        listTopicos.setAdapter(adapterTopicos);
+
+        Call<TopicoList> chamada = topicoService.listarTopicos();
+        chamada.enqueue(new Callback<TopicoList>() {
+            @Override
+            public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
+                topicos = response.body();
+                adapterTopicos = new AdapterTopicosUser((List<Topico>) topicos.getListaTopicos(), ListaTopicosActivity.this);
+                listTopicos.setAdapter(adapterTopicos);
+
+                listTopicos.setTextFilterEnabled(false);
+            }
+
+            @Override
+            public void onFailure(Call<TopicoList> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "Falha na conexão", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         /*
         listTopicos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

@@ -69,7 +69,7 @@ public class FeedTopicosActivity extends AppCompatActivity {
         criarRespostas();
         //fazer a parte do list view
         ListView lstPerguntas = (ListView) findViewById(R.id.perguntou);
-        AdapterPerguntas adapterPerguntas = new AdapterPerguntas(perguntas, respostas, usuarios, this);
+        AdapterPerguntas adapterPerguntas = new AdapterPerguntas(perguntas, this);
 
         lstPerguntas.setAdapter(adapterPerguntas);
 

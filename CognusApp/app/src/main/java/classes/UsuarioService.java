@@ -8,6 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -22,11 +23,11 @@ public interface UsuarioService {
     @POST("usuarios/cadastrarUsuario")
     Call<Usuario> cadastrarUsuario(@Body Usuario user);
     @POST("usuarios/consultarUsuario")
-    Call<Usuario> buscarUsuario(@Body String id);
+    Call<Usuario> consultarUsuario(@Body String id);
     @POST("usuarios/consultarUsuarioEmail")
     Call<Usuario> buscarUsuarioEmail(@Body String email);
-
-    @Headers("Content-type: application/json")
+    @GET("usuarios/listarUsuarios")
+    Call<UserList> listarUsuarios();
     @POST("usuarios/autenticarUsuario")
     Call<Usuario> autenticarUsuario(@Body Usuario user);
 }

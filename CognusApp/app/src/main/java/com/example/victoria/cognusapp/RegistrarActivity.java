@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import classes.Topico;
 import classes.TopicoList;
@@ -32,14 +33,6 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
     UsuarioService usuarioService;
     TopicoService topicoService;
     boolean ok = false;
-
-    /*protected void criarTopicos() {
-        topicos = new ArrayList<String>();
-        topicos.add("Matemática");
-        topicos.add("Música");
-        topicos.add("Ciência");
-        topicos.add("Tecnologia");
-    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +117,17 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
             @Override
             public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
                 topicos = response.body();
+                List<Topico> topicos2 = topicos.getListaTopicos();
+
+                if (topicos2.size() == 2) {
+                    Topico t = topicos2.get(0);
+                    Topico t2 = topicos2.get(1);
+                    if (t.gettopico_id() == t2.gettopico_id()) {
+                        topicos2.remove(t2);
+                    }
+                    topicos.setListaTopicos(topicos2);
+                }
+
                 adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
                 listTopicos.setAdapter(adapterTopicos);
 

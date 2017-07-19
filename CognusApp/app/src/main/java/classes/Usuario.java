@@ -5,6 +5,7 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -25,7 +26,6 @@ public class Usuario implements Parcelable {
     private String user_senha;
     @SerializedName("user_numseguidores")
     private int user_numseguidores;
-
 
     public Usuario(String user_name, String user_email, String user_senha, int user_id) {
 

@@ -35,10 +35,10 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/resposta" />
+        app:layout_constraintBottom_toTopOf="@+id/textoPergunta" />
 
     <EditText
-        android:id="@+id/resposta"
+        android:id="@+id/textoPergunta"
         android:layout_width="328dp"
         android:layout_height="276dp"
         android:background="@drawable/drawable_contorno"

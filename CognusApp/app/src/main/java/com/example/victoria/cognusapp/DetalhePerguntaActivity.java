@@ -3,6 +3,7 @@ package com.example.victoria.cognusapp;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -10,18 +11,28 @@ import android.widget.TextView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import classes.Pergunta;
 import classes.Resposta;
+import classes.RespostaList;
+import classes.RespostaService;
 import classes.Usuario;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetalhePerguntaActivity extends AppCompatActivity {
-    private List<Resposta> respostas = new ArrayList<>();
+    private List<Resposta> respostas;
     Pergunta pergSelecionada;
     Usuario usuarioAtual;
+    RespostaService respostaService;
 
-    public void criarRespostas() {
+    /*public void criarRespostas() {
         Usuario usuario = new Usuario("pudim","g@g", "dssdds");
         Resposta r11 = new Resposta("A raiz quadrada é aproximadamente 32,7", 2,0,usuario,1);
         Resposta r21 = new Resposta("Segundo psicólogos a cor mais bonita é rosa", 5,2,usuario,2);
@@ -29,6 +40,27 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         respostas.add(r11);
         respostas.add(r21);
         respostas.add(r22);
+    }*/
+
+    public void obterRespostas() {
+        Call<RespostaList> chamada = respostaService.listarRespostasPergunta(Integer.toString(pergSelecionada.getperg_id()));
+        chamada.enqueue(new Callback<RespostaList>() {
+            @Override
+            public void onResponse(Call<RespostaList> call, Response<RespostaList> response) {
+                RespostaList r = response.body();
+                if (r != null) {
+                    respostas = r.getListRespostas();
+                }
+                else {
+                    respostas = new ArrayList<Resposta>();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RespostaList> call, Throwable t) {
+                Log.i("Erro", t.getMessage());
+            }
+        });
     }
 
     @Override
@@ -38,25 +70,25 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        pergSelecionada = (Pergunta) intent.getParcelableExtra("pergunta");
-        usuarioAtual = (Usuario) intent.getParcelableExtra("usuario");
+        pergSelecionada = intent.getParcelableExtra("pergunta");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(getString(R.string.ip_requisicao))
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        respostaService = retrofit.create(RespostaService.class);
 
         TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
         txtPergunta.setText(pergSelecionada.gettexto_perg());
 
         ListView lstRespostas = (ListView) findViewById(R.id.lstRespostas);
-        List<Resposta> r2 = new ArrayList<>();
-        criarRespostas();
-        for (Resposta r: respostas) {
-            System.out.println(pergSelecionada.getperg_id());
-            if (r.getPergunta() == pergSelecionada.getperg_id()) {
-                r2.add(r);
-            }
-        }
-        TextView lblNumResp = (TextView) findViewById(R.id.numero_respostas);
-        lblNumResp.setText(r2.size() + " resposta(s)");
 
-        AdapterRespostas adapterRespostas = new AdapterRespostas(r2, this);
+        //criarRespostas();
+        obterRespostas();
+        TextView lblNumResp = (TextView) findViewById(R.id.numero_respostas);
+        lblNumResp.setText(respostas.size() + " resposta(s)");
+
+        AdapterRespostas adapterRespostas = new AdapterRespostas((List<Resposta>) respostas, this);
         lstRespostas.setAdapter(adapterRespostas);
     }
 
