@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity
                 startActivity(intent);
             }*/
             if (Profile.getCurrentProfile() != null)
-                System.out.println(Profile.getCurrentProfile().getName() + "Email: " );
+                System.out.println(Profile.getCurrentProfile().getName() );
             if (LoginManager.getInstance() != null)
                 LoginManager.getInstance().logOut();
 

@@ -1,14 +1,22 @@
 package com.example.victoria.cognusapp;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.Profile;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +39,10 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
     ListView listTopicos;
     UsuarioService usuarioService;
     TopicoService topicoService;
-    boolean ok = false;
+    boolean face;
+    Profile perfil;
+    EditText txtNome;
+    ImageView imgFoto;
 
     /*protected void criarTopicos() {
         topicos = new ArrayList<String>();
@@ -48,6 +59,8 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
 
         Intent intent = getIntent();
         usuarioAtual = intent.getParcelableExtra("usuario");
+        face = intent.getBooleanExtra("face", false);
+
         topicos = new TopicoList();
 
         Retrofit retrofit = new Retrofit.Builder()
@@ -67,10 +80,17 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         mSearchView.setOnQueryTextListener(this);
         //mSearchView.setSubmitButtonEnabled(true);
         //mSearchView.setQueryHint("Procure mais categorias");
+        txtNome = (EditText) findViewById(R.id.txtNome);
+        imgFoto = (ImageView) findViewById(R.id.foto);
+        if (face) {
+            perfil = Profile.getCurrentProfile();
+            imgFoto.setImageURI(perfil.getProfilePictureUri(110,110));
+            txtNome.setText(perfil.getName());
+        }
     }
 
     public void finalizarRegistro(View view) {
-        EditText txtNome = (EditText) findViewById(R.id.txtNome);
+
         if (txtNome.getText().length() > 0) {
             //inserir o novo usuário no banco de dados
             //pegar os topicos escolhidos
@@ -94,7 +114,7 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         chamada1.enqueue(new Callback<Usuario>() {
 
             public void onResponse(Call<Usuario> call, Response<Usuario> response) {
-               // try {
+               try {
                     Usuario user = response.body();
                     //proxima pagina
                     Intent intent = new Intent(RegistrarActivity.this, MainActivity.class);
@@ -102,11 +122,10 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
                     intent.putExtra("usuario", user);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
-                //}
-                /*catch (Exception e) {
+                }
+                catch (Exception e) {
                     Log.i("Erro", e.getMessage());
-                }*/
-
+                }
             }
 
             public void onFailure(Call<Usuario> call, Throwable t) {
@@ -123,16 +142,23 @@ public class RegistrarActivity extends AppCompatActivity implements android.widg
         chamada.enqueue(new Callback<TopicoList>() {
             @Override
             public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
-                topicos = response.body();
-                adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
-                listTopicos.setAdapter(adapterTopicos);
+                try {
+                    topicos = response.body();
+                }
+                catch(Exception e) {
+                    topicos = new TopicoList();
+                }
+                finally {
+                    adapterTopicos = new AdapterTopicos(topicos.getListaTopicos(), RegistrarActivity.this);
+                    listTopicos.setAdapter(adapterTopicos);
 
-                listTopicos.setTextFilterEnabled(false);
+                    listTopicos.setTextFilterEnabled(false);
+                }
             }
 
             @Override
             public void onFailure(Call<TopicoList> call, Throwable t) {
-
+                Log.i("Erro", t.getMessage());
             }
         });
     }
