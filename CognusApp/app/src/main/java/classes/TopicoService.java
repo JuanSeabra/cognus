@@ -25,4 +25,8 @@ public interface TopicoService {
 
     @POST("topicos/listarTopicoPergunta")
     Call<TopicoList> listarTopicoPergunta(@Body long id);
+    @POST("topicos/listarPerguntasTopico")
+    Call<PerguntaList> listarPerguntasTopico(@Body long id);
+    @POST("topicos/listarTopicosUsuario")
+    Call<TopicoList> listarTopicosUsuario(@Body long id);
 }

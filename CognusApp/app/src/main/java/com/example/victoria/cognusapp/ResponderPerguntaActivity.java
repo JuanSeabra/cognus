@@ -57,7 +57,6 @@ public class ResponderPerguntaActivity extends AppCompatActivity {
             Resposta resposta = new Resposta(texto, 0, 0, userAtual.getUser_id(), pergunta.getperg_id());
 
             System.out.println("RESPOSTA");
-            resposta.setuser_id(2);
 
             System.out.println(resposta.getuser_id());
 

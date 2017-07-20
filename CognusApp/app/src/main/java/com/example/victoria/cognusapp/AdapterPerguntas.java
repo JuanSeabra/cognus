@@ -69,21 +69,23 @@ public class AdapterPerguntas extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = act.getLayoutInflater()
                 .inflate(R.layout.activity_layout_pergunta, parent, false);
-        Pergunta pergunta = perguntas.get(position);
+        if (perguntas.size() > 0) {
 
-        lblTags = (TextView) view.findViewById(R.id.tags);
-        TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
-        lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
-        TextView lblTextoPergunta = (TextView) view.findViewById(R.id.textoPergunta);
+            Pergunta pergunta = perguntas.get(position);
 
-        /*String tags = "Tag1 Tag2 Tag3";
-        lblTags.setText(tags);*/
-        lblPergunta.setText(pergunta.getDescricao());
-        lblTextoPergunta.setText(pergunta.gettexto_perg());
+            lblTags = (TextView) view.findViewById(R.id.tags);
+            TextView lblPergunta = (TextView) view.findViewById(R.id.txtPerguntaDesc);
+            lblNomeUsuario = (TextView) view.findViewById(R.id.nome_usuario_resp);
+            TextView lblTextoPergunta = (TextView) view.findViewById(R.id.textoPergunta);
 
-        buscarTopicosPergunta(pergunta.getperg_id());
-        buscarUsuario(pergunta.getuser_id().getUser_id());
+            /*String tags = "Tag1 Tag2 Tag3";
+            lblTags.setText(tags);*/
+            lblPergunta.setText(pergunta.getDescricao());
+            lblTextoPergunta.setText(pergunta.gettexto_perg());
 
+            buscarTopicosPergunta(pergunta.getperg_id());
+            buscarUsuario(pergunta.getuser_id().getUser_id());
+        }
         return view;
     }
 

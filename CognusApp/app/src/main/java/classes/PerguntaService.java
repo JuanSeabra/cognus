@@ -23,4 +23,7 @@ public interface PerguntaService {
 
     @GET("perguntas/listarPerguntas")
     Call<PerguntaList> listarPerguntas();
+
+    @POST("perguntas/listarPerguntasTopico")
+    Call<PerguntaList> listarPerguntasTopico(@Body long id);
 }

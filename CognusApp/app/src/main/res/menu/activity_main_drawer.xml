@@ -10,7 +10,7 @@
             android:title="Feed principal" />
         <item
             android:id="@+id/nav_topicos"
-            android:title="Seus tópicos" />
+            android:title="Tópicos" />
     </group>
 
     <item

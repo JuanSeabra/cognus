@@ -10,22 +10,36 @@
 
     <TextView
         android:id="@+id/nome_usuario_resp"
-        android:layout_width="302dp"
-        android:layout_height="12dp"
+        android:layout_width="305dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="29dp"
+        android:gravity="left"
         android:text="Usuário"
-        android:gravity="center"
-        android:textSize="30px"
-        android:layout_marginEnd="14dp"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="16dp" />
+        android:textSize="36px"
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintBottom_creator="1"
+        app:layout_constraintBottom_toTopOf="@+id/textoPergunta"
+        android:layout_marginTop="16dp"
+        tools:layout_constraintLeft_creator="1"
+        android:layout_marginBottom="22dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="29dp"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textoPergunta"
-        android:layout_width="304dp"
+        android:layout_width="0dp"
         android:layout_height="85dp"
-        android:layout_marginEnd="45dp"
+        android:layout_marginEnd="28dp"
         android:background="@drawable/drawable_contorno"
-        tools:layout_editor_absoluteY="38dp"
-        tools:layout_editor_absoluteX="28dp" />
+        tools:layout_constraintTop_creator="1"
+        tools:layout_constraintRight_creator="1"
+        android:layout_marginStart="28dp"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="66dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

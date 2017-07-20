@@ -147,6 +147,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        obterPerguntas();
+    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -209,6 +215,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                             perguntas.remove(p2);
                         }
                     }
+
+                    perguntaList.setListaPerguntas(perguntas);
                 }
                 else {
                     perguntaList = new PerguntaList();

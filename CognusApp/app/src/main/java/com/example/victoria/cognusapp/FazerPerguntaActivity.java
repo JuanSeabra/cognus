@@ -48,14 +48,18 @@ public class FazerPerguntaActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Pergunta> call, Response<Pergunta> response) {
                 Pergunta pergunta_servidor = response.body();
-                Toast.makeText(getApplicationContext(), pergunta_servidor.gettexto_perg() + " " + pergunta_servidor.getDescricao(),
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getApplicationContext(), pergunta_servidor.gettexto_perg() + " " + pergunta_servidor.getDescricao(),
+                        Toast.LENGTH_SHORT).show();*/
+                Intent intent = new Intent(FazerPerguntaActivity.this, MainActivity.class);
+                intent.putExtra("usuario", usuarioAtual);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
 
             @Override
             public void onFailure(Call<Pergunta> call, Throwable t) {
                 Log.i("Erro", t.getMessage());
-                Toast.makeText(getApplicationContext(), "Falha na conexão",
+                Toast.makeText(getApplicationContext(), "Falha",
                         Toast.LENGTH_SHORT).show();
             }
         });
@@ -64,9 +68,6 @@ public class FazerPerguntaActivity extends AppCompatActivity {
         //adicionar a nova pergunta no banco
         //processar a extração de topicos
 
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("usuario", usuarioAtual);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+
     }
 }

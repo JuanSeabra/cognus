@@ -19,6 +19,9 @@ import classes.Pergunta;
 import classes.Resposta;
 import classes.RespostaList;
 import classes.RespostaService;
+import classes.Topico;
+import classes.TopicoList;
+import classes.TopicoService;
 import classes.Usuario;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -30,9 +33,13 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     private List<Resposta> respostas;
     Pergunta pergSelecionada;
     Usuario usuarioAtual;
+    private TopicoService topicoService;
     RespostaService respostaService;
     ListView lstRespostas;
     TextView lblNumResp;
+    TextView lblTextoPergunta;
+    TextView lblTags;
+    TextView txtPergunta;
 
     public void obterRespostas() {
         Call<RespostaList> chamada = respostaService.listarRespostasPergunta(pergSelecionada.getperg_id());
@@ -42,7 +49,15 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
                 RespostaList r = response.body();
                 if (r != null) {
                     System.out.println("Teve respostas");
-                    respostas = r.getListRespostas();
+                    List<Resposta> respostas1 = r.getListRespostas();
+                    if (respostas1.size() == 2) {
+                        Resposta r1 = respostas1.get(0);
+                        Resposta r2 = respostas1.get(1);
+                        if (r1.getresp_id() == r2.getresp_id()) {
+                            respostas1.remove(r1);
+                        }
+                    }
+                    respostas = respostas1;
                 }
                 else {
                     System.out.println("Não teve respostas");
@@ -82,9 +97,17 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
                 .build();
 
         respostaService = retrofit.create(RespostaService.class);
+        topicoService = retrofit.create(TopicoService.class);
 
-        TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
+        txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
         txtPergunta.setText(pergSelecionada.gettexto_perg());
+
+        lblTextoPergunta = (TextView) findViewById(R.id.txtTituloPergunta);
+        lblTextoPergunta.setText(pergSelecionada.getDescricao());
+
+        lblTags = (TextView) findViewById(R.id.tags);
+        buscarTopicosPergunta(pergSelecionada.getperg_id());
+
 
         lstRespostas = (ListView) findViewById(R.id.lstRespostas);
 
@@ -115,6 +138,46 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        usuarioAtual = intent.getParcelableExtra("usuario");
+
+        pergSelecionada = intent.getParcelableExtra("pergunta");
         obterRespostas();
+    }
+
+    public void buscarTopicosPergunta(long id) {
+        Call<TopicoList> chamada = topicoService.listarTopicoPergunta(id);
+        chamada.enqueue(new Callback<TopicoList>() {
+            @Override
+            public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
+                TopicoList topicoList = response.body();
+                if (topicoList != null) {
+                    List<Topico> topicos = topicoList.getListaTopicos();
+                    if (topicos.size() == 2) {
+                        Topico t = topicos.get(0);
+                        Topico t2 = topicos.get(1);
+                        if (t.gettopico_id() == t2.gettopico_id()) {
+                            topicos.remove(t2);
+                        }
+                        topicoList.setListaTopicos(topicos);
+                    }
+
+                    String txtTopicos = "";
+                    for (Topico t: topicoList.getListaTopicos() ) {
+                        txtTopicos += (t.getdescricao_topico() + " ");
+                    }
+
+                    lblTags.setText(txtTopicos);
+                }
+                else {
+                    lblTags.setText("Sem tags");
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<TopicoList> call, Throwable t) {
+
+            }
+        });
     }
 }

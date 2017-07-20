@@ -50,7 +50,7 @@ public class ListaTopicosActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<TopicoList> call, Response<TopicoList> response) {
                 topicos = response.body();
-                adapterTopicos = new AdapterTopicosUser((List<Topico>) topicos.getListaTopicos(), ListaTopicosActivity.this);
+                adapterTopicos = new AdapterTopicosUser( topicos.getListaTopicos(), ListaTopicosActivity.this);
                 listTopicos.setAdapter(adapterTopicos);
 
                 listTopicos.setTextFilterEnabled(false);
@@ -62,14 +62,14 @@ public class ListaTopicosActivity extends AppCompatActivity {
             }
         });
 
-        /*
+
         listTopicos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String topicoSelecionado = topicos.get(position);
+                Topico topicoSelecionado = topicos.getListaTopicos().get(position);
                 Intent intent1 = new Intent(ListaTopicosActivity.this, FeedTopicosActivity.class);
                 intent1.putExtra("topico",topicoSelecionado);
                 startActivity(intent1);
             }
-        });*/
+        });
     }
 }
