@@ -7,18 +7,20 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Resposta {
-    @SerializedName("texto_resp")
-    private String texto_resp;
-    @SerializedName("num_votos_positivos")
-    private int num_votos_positivos;
-    @SerializedName("num_votos_negativos")
-    private int num_votos_negativos;
     @SerializedName("resp_id")
     private int resp_id;
+    @SerializedName("texto_resp")
+    private String texto_resp;
+
     @SerializedName("user_id")
     private int user_id;
     @SerializedName("perg_id")
     private int perg_id;
+
+    @SerializedName("num_votos_positivos")
+    private int num_votos_positivos;
+    @SerializedName("num_votos_negativos")
+    private int num_votos_negativos;
 
     public int getuser_id() {
         return user_id;
@@ -34,6 +36,10 @@ public class Resposta {
 
     public void setPergunta(int pergunta) {
         this.perg_id = pergunta;
+    }
+
+    public Resposta(){
+
     }
 
 

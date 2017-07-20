@@ -31,6 +31,8 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
     Pergunta pergSelecionada;
     Usuario usuarioAtual;
     RespostaService respostaService;
+    ListView lstRespostas;
+    TextView lblNumResp;
 
     public void obterRespostas() {
         Call<RespostaList> chamada = respostaService.listarRespostasPergunta(pergSelecionada.getperg_id());
@@ -45,6 +47,15 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
                 else {
                     System.out.println("Não teve respostas");
                     respostas = new ArrayList<Resposta>();
+                }
+                AdapterRespostas adapterRespostas = new AdapterRespostas(respostas, DetalhePerguntaActivity.this);
+                lstRespostas.setAdapter(adapterRespostas);
+
+                if (respostas != null)
+                    lblNumResp.setText(respostas.size() + " resposta(s)");
+                else {
+                    respostas = new ArrayList<>();
+                    lblNumResp.setText("0 respostas");
                 }
             }
 
@@ -75,11 +86,11 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         TextView txtPergunta = (TextView) findViewById(R.id.txtPerguntaDesc);
         txtPergunta.setText(pergSelecionada.gettexto_perg());
 
-        ListView lstRespostas = (ListView) findViewById(R.id.lstRespostas);
+        lstRespostas = (ListView) findViewById(R.id.lstRespostas);
 
         //criarRespostas();
-        obterRespostas();
-        TextView lblNumResp = (TextView) findViewById(R.id.numero_respostas);
+
+        lblNumResp = (TextView) findViewById(R.id.numero_respostas);
         if (respostas != null)
             lblNumResp.setText(respostas.size() + " resposta(s)");
         else {
@@ -89,6 +100,9 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
 
         AdapterRespostas adapterRespostas = new AdapterRespostas(respostas, this);
         lstRespostas.setAdapter(adapterRespostas);
+
+        obterRespostas();
+
     }
 
     public void responder(View view) {
@@ -96,5 +110,11 @@ public class DetalhePerguntaActivity extends AppCompatActivity {
         intent.putExtra("pergunta", pergSelecionada);
         intent.putExtra("usuario", usuarioAtual);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        obterRespostas();
     }
 }

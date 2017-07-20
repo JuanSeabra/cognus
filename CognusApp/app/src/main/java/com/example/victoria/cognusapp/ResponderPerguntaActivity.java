@@ -54,9 +54,11 @@ public class ResponderPerguntaActivity extends AppCompatActivity {
         if (texto != "") {
             System.out.println(userAtual.toString());
             System.out.println(pergunta.getperg_id());
-            final Resposta resposta = new Resposta(texto, 0, 0, userAtual.getUser_id(), pergunta.getperg_id());
+            Resposta resposta = new Resposta(texto, 0, 0, userAtual.getUser_id(), pergunta.getperg_id());
 
             System.out.println("RESPOSTA");
+            resposta.setuser_id(2);
+
             System.out.println(resposta.getuser_id());
 
             Call<Resposta> chamada = respostaService.cadastrarResposta(resposta);
